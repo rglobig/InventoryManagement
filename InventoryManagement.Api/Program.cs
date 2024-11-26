@@ -1,3 +1,5 @@
+using InventoryManagement.Application.Repositories;
+using InventoryManagement.Application.Services;
 using InventoryManagement.Infrastructure;
 using Microsoft.EntityFrameworkCore;
 
@@ -7,6 +9,8 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+builder.Services.AddScoped<IInventoryRepository, InventoryRepository>();
+builder.Services.AddTransient<IInventoryService, InventoryService>();
 builder.Services.AddDbContext<InventoryDbContext>(UseSqlite(builder));
 
 var app = builder.Build();
