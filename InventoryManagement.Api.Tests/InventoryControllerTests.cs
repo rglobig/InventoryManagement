@@ -25,6 +25,7 @@ public class InventoryControllerTests
         var result = actionResult.Result as OkObjectResult;
         result.Should().NotBeNull();
         result!.Value.Should().BeEquivalentTo(returnData);
+        mock.Verify(s => s.GetInventoryItems(), Times.Once);
     }
 
     [Fact]
@@ -43,6 +44,7 @@ public class InventoryControllerTests
         var result = actionResult.Result as OkObjectResult;
         result.Should().NotBeNull();
         result!.Value.Should().BeEquivalentTo(returnData);
+        mock.Verify(s => s.GetInventoryItem(id), Times.Once);
     }
 
     [Fact]
@@ -59,6 +61,7 @@ public class InventoryControllerTests
         var actionResult = controller.GetInventoryItemWithId(id);
 
         actionResult.Result.Should().BeAssignableTo<NotFoundResult>();
+        mock.Verify(s => s.GetInventoryItem(id), Times.Once);
     }
 
     [Fact]
@@ -77,6 +80,7 @@ public class InventoryControllerTests
         var result = actionResult.Result as CreatedResult;
         result.Should().NotBeNull();
         result!.Value.Should().BeEquivalentTo(returnData);
+        mock.Verify(s => s.CreateInventoryItem(input), Times.Once);
     }
 
     [Fact]
@@ -96,6 +100,7 @@ public class InventoryControllerTests
         var result = actionResult.Result as OkObjectResult;
         result.Should().NotBeNull();
         result!.Value.Should().BeEquivalentTo(returnData);
+        mock.Verify(s => s.TryUpdateInventoryItem(id, input, out item), Times.Once);
     }
 
     [Fact]
@@ -112,6 +117,7 @@ public class InventoryControllerTests
         var actionResult = controller.UpdateInventoryItem(id, input);
 
         actionResult.Result.Should().BeAssignableTo<BadRequestResult>();
+        mock.Verify(s => s.TryUpdateInventoryItem(id, input, out item!), Times.Once);
     }
 
     [Fact]
@@ -129,6 +135,7 @@ public class InventoryControllerTests
         var result = actionResult.Result as OkObjectResult;
         result.Should().NotBeNull();
         result!.Value.Should().BeEquivalentTo(returnData);
+        mock.Verify(s => s.TryDeleteInventoryItem(id, out input), Times.Once);
     }
 
     [Fact]
@@ -143,5 +150,6 @@ public class InventoryControllerTests
 
         var actionResult = controller.DeleteInventoryItem(id);
         actionResult.Result.Should().BeAssignableTo<BadRequestResult>();
+        mock.Verify(s => s.TryDeleteInventoryItem(id, out input!), Times.Once);
     }
 }
