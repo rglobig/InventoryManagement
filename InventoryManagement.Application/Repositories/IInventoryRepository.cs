@@ -6,4 +6,5 @@ public interface IInventoryRepository
 {
     ICollection<InventoryItem> GetInventoryItems();
     InventoryItem? GetInventoryItem(Guid id);
+    InventoryItem CreateInventoryItem(InventoryItem item);
 }

@@ -62,4 +62,22 @@ public class InventoryControllerTests
         var result = actionResult.Result as NotFoundResult;
         result.Should().NotBeNull();
     }
+
+    [Fact]
+    public void CreateInventoryItem_ResultsInCreated()
+    {
+        var input = new CreateInventoryItemDto("iPhone", "Smartphone", 1, 1000);
+        var item = input.ToInventoryItem();
+        var returnData = InventoryItemDto.From(item);
+
+        var mock = new Mock<IInventoryService>();
+        mock.Setup(s => s.CreateInventoryItem(input)).Returns(item);
+        var controller = new InventoryController(mock.Object);
+
+        var actionResult = controller.CreateItem(input);
+
+        var result = actionResult.Result as CreatedResult;
+        result.Should().NotBeNull();
+        result!.Value.Should().BeEquivalentTo(returnData);
+    }
 }
