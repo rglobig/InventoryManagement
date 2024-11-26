@@ -9,4 +9,5 @@ public interface IInventoryService
     InventoryItem? GetInventoryItem(Guid id);
     InventoryItem CreateInventoryItem(CreateInventoryItemDto data);
     bool TryUpdateInventoryItem(Guid id, UpdateInventoryItemDto data, out InventoryItem? inventoryItem);
+    bool TryDeleteInventoryItem(Guid id, out InventoryItem? inventoryItem);
 }

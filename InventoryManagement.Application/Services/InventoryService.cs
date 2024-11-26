@@ -25,12 +25,19 @@ public class InventoryService(IInventoryRepository inventoryRepository) : IInven
     {
         inventoryItem = GetInventoryItem(id);
 
-        if(inventoryItem != null)
-        {
-            inventoryItem.Update(data.Name, data.Description, data.Quantity, data.Price);
-            return true;
-        }
+        if (inventoryItem == null) return false;
 
-        return false;
+        inventoryItem.Update(data.Name, data.Description, data.Quantity, data.Price);
+        return true;
+    }
+
+    public bool TryDeleteInventoryItem(Guid id, out InventoryItem? inventoryItem)
+    {
+        inventoryItem = GetInventoryItem(id);
+
+        if (inventoryItem == null) return false;
+
+        inventoryRepository.DeleteInventoryItem(inventoryItem);
+        return true;
     }
 }

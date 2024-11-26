@@ -113,4 +113,35 @@ public class InventoryControllerTests
 
         actionResult.Result.Should().BeAssignableTo<BadRequestResult>();
     }
+
+    [Fact]
+    public void DeleteInventoryItem_ResultsInOk()
+    {
+        var input = new InventoryItem("iPhone", "Smartphone", 1, 1000);
+        var id = input.Id;
+        var returnData = InventoryItemDto.From(input);
+
+        var mock = new Mock<IInventoryService>();
+        mock.Setup(s => s.TryDeleteInventoryItem(id, out input)).Returns(true);
+        var controller = new InventoryController(mock.Object);
+
+        var actionResult = controller.DeleteInventoryItem(id);
+        var result = actionResult.Result as OkObjectResult;
+        result.Should().NotBeNull();
+        result!.Value.Should().BeEquivalentTo(returnData);
+    }
+
+    [Fact]
+    public void DeleteInventoryItem_ResultsInBadRequest()
+    {
+        InventoryItem input = null!;
+        var id = Guid.NewGuid();
+
+        var mock = new Mock<IInventoryService>();
+        mock.Setup(s => s.TryDeleteInventoryItem(id, out input!)).Returns(false);
+        var controller = new InventoryController(mock.Object);
+
+        var actionResult = controller.DeleteInventoryItem(id);
+        actionResult.Result.Should().BeAssignableTo<BadRequestResult>();
+    }
 }

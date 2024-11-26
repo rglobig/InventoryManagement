@@ -54,5 +54,19 @@ namespace InventoryManagement.Api.Controllers
             var dto = InventoryItemDto.From(item!);
             return Ok(dto);
         }
+
+        [HttpDelete("{id:guid}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public ActionResult<InventoryItemDto?> DeleteInventoryItem(Guid id)
+        {
+            if(!inventoryService.TryDeleteInventoryItem(id, out InventoryItem? item))
+            {
+                return BadRequest();
+            }
+
+            var dto = InventoryItemDto.From(item!);
+            return Ok(dto);
+        }
     }
 }

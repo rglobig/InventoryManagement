@@ -12,6 +12,12 @@ public class InventoryRepository(InventoryDbContext dbContext) : IInventoryRepos
         return entity.Entity;
     }
 
+    public void DeleteInventoryItem(InventoryItem item)
+    {
+        dbContext.InventoryItems.Remove(item);
+        dbContext.SaveChanges();
+    }
+
     public InventoryItem? GetInventoryItem(Guid id)
     {
         return dbContext.InventoryItems.Find(id);
