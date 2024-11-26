@@ -1,8 +1,13 @@
+using InventoryManagement.Infrastructure;
+using Microsoft.EntityFrameworkCore;
+
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+builder.Services.AddDbContext<InventoryDbContext>(UseSqlite(builder));
 
 var app = builder.Build();
 
@@ -19,3 +24,8 @@ app.UseAuthorization();
 app.MapControllers();
 
 app.Run();
+
+static Action<DbContextOptionsBuilder> UseSqlite(WebApplicationBuilder builder)
+{
+    return options => options.UseSqlite(builder.Configuration.GetConnectionString("InventoryDb"));
+}
