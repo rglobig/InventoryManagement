@@ -3,25 +3,30 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InventoryManagement.Api", "InventoryManagement.Api\InventoryManagement.Api.csproj", "{23DDF6B2-6A93-4974-A951-587267E6E47A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "InventoryManagement.Api", "InventoryManagement.Api\InventoryManagement.Api.csproj", "{23DDF6B2-6A93-4974-A951-587267E6E47A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InventoryManagement.Application", "InventoryManagement.Application\InventoryManagement.Application.csproj", "{CBD96117-2562-4D0F-A4DB-4FDB1CD03430}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "InventoryManagement.Application", "InventoryManagement.Application\InventoryManagement.Application.csproj", "{CBD96117-2562-4D0F-A4DB-4FDB1CD03430}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InventoryManagement.Domain", "InventoryManagement.Domain\InventoryManagement.Domain.csproj", "{492143DA-71D7-4D6B-86FB-C06011884550}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "InventoryManagement.Domain", "InventoryManagement.Domain\InventoryManagement.Domain.csproj", "{492143DA-71D7-4D6B-86FB-C06011884550}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InventoryManagement.Infrastructure", "InventoryManagement.Infrastructure\InventoryManagement.Infrastructure.csproj", "{8594AC98-6290-4DD7-99A6-A8C8C51ECD73}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "InventoryManagement.Infrastructure", "InventoryManagement.Infrastructure\InventoryManagement.Infrastructure.csproj", "{8594AC98-6290-4DD7-99A6-A8C8C51ECD73}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "_Tests", "_Tests", "{B1085C21-E304-4E78-A9D2-D5A18E2466D7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InventoryManagement.Api.Tests", "InventoryManagement.Api.Tests\InventoryManagement.Api.Tests.csproj", "{E772C786-F7CB-4C79-900C-BA911EA70CB2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "InventoryManagement.Api.Tests", "InventoryManagement.Api.Tests\InventoryManagement.Api.Tests.csproj", "{E772C786-F7CB-4C79-900C-BA911EA70CB2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InventoryManagement.Application.Tests", "InventoryManagement.Application.Tests\InventoryManagement.Application.Tests.csproj", "{A41C2F59-13E4-4055-8F87-7C2CD67B930E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "InventoryManagement.Application.Tests", "InventoryManagement.Application.Tests\InventoryManagement.Application.Tests.csproj", "{A41C2F59-13E4-4055-8F87-7C2CD67B930E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InventoryManagement.Domain.Tests", "InventoryManagement.Domain.Tests\InventoryManagement.Domain.Tests.csproj", "{1EBCC6B3-C14D-4623-8E09-CD6F862A9C1B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "InventoryManagement.Domain.Tests", "InventoryManagement.Domain.Tests\InventoryManagement.Domain.Tests.csproj", "{1EBCC6B3-C14D-4623-8E09-CD6F862A9C1B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InventoryManagement.Infrastructure.Tests", "InventoryManagement.Infrastructure.Tests\InventoryManagement.Infrastructure.Tests.csproj", "{26A1A518-F67F-40E6-9A3F-F1A6DABCAFC1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "InventoryManagement.Infrastructure.Tests", "InventoryManagement.Infrastructure.Tests\InventoryManagement.Infrastructure.Tests.csproj", "{26A1A518-F67F-40E6-9A3F-F1A6DABCAFC1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InventoryManagement.Api.IntegrationTests", "InventoryManagement.Api.IntegrationTests\InventoryManagement.Api.IntegrationTests.csproj", "{9779CD81-ADD5-4D1F-AA4A-93EFE421AF55}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "InventoryManagement.Api.IntegrationTests", "InventoryManagement.Api.IntegrationTests\InventoryManagement.Api.IntegrationTests.csproj", "{9779CD81-ADD5-4D1F-AA4A-93EFE421AF55}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{14CDF37C-219C-455A-8B90-54DF1E8D6005}"
+	ProjectSection(SolutionItems) = preProject
+		README.md = README.md
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
