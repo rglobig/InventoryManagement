@@ -42,7 +42,7 @@ namespace InventoryManagement.Api.Controllers
             return Created(nameof(CreateInventoryItem), dto);
         }
 
-        [HttpPatch]
+        [HttpPatch("{id:guid}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public ActionResult<InventoryItemDto?> UpdateInventoryItem(Guid id, UpdateInventoryItemDto data)
