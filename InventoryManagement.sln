@@ -21,6 +21,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InventoryManagement.Domain.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InventoryManagement.Infrastructure.Tests", "InventoryManagement.Infrastructure.Tests\InventoryManagement.Infrastructure.Tests.csproj", "{26A1A518-F67F-40E6-9A3F-F1A6DABCAFC1}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InventoryManagement.Api.IntegrationTests", "InventoryManagement.Api.IntegrationTests\InventoryManagement.Api.IntegrationTests.csproj", "{9779CD81-ADD5-4D1F-AA4A-93EFE421AF55}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -59,6 +61,10 @@ Global
 		{26A1A518-F67F-40E6-9A3F-F1A6DABCAFC1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{26A1A518-F67F-40E6-9A3F-F1A6DABCAFC1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{26A1A518-F67F-40E6-9A3F-F1A6DABCAFC1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9779CD81-ADD5-4D1F-AA4A-93EFE421AF55}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9779CD81-ADD5-4D1F-AA4A-93EFE421AF55}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9779CD81-ADD5-4D1F-AA4A-93EFE421AF55}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9779CD81-ADD5-4D1F-AA4A-93EFE421AF55}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -68,6 +74,7 @@ Global
 		{A41C2F59-13E4-4055-8F87-7C2CD67B930E} = {B1085C21-E304-4E78-A9D2-D5A18E2466D7}
 		{1EBCC6B3-C14D-4623-8E09-CD6F862A9C1B} = {B1085C21-E304-4E78-A9D2-D5A18E2466D7}
 		{26A1A518-F67F-40E6-9A3F-F1A6DABCAFC1} = {B1085C21-E304-4E78-A9D2-D5A18E2466D7}
+		{9779CD81-ADD5-4D1F-AA4A-93EFE421AF55} = {B1085C21-E304-4E78-A9D2-D5A18E2466D7}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {FF91DCC2-A318-432E-906C-01449B43CFC3}

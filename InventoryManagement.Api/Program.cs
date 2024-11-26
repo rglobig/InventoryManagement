@@ -33,3 +33,5 @@ static Action<DbContextOptionsBuilder> UseSqlite(WebApplicationBuilder builder)
 {
     return options => options.UseSqlite(builder.Configuration.GetConnectionString("InventoryDb"));
 }
+
+public partial class Program { }
