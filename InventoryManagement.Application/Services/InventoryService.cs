@@ -9,4 +9,9 @@ public class InventoryService(IInventoryRepository inventoryRepository) : IInven
     {
         return inventoryRepository.GetInventoryItems();
     }
+
+    public InventoryItem? GetInventoryItem(Guid id)
+    {
+        return inventoryRepository.GetInventoryItem(id);
+    }
 }
