@@ -42,7 +42,6 @@ public class InventoryControllerTests
 
         var result = actionResult.Result as OkObjectResult;
         result.Should().NotBeNull();
-
         result!.Value.Should().BeEquivalentTo(returnData);
     }
 
@@ -59,8 +58,7 @@ public class InventoryControllerTests
 
         var actionResult = controller.GetInventoryItemWithId(id);
 
-        var result = actionResult.Result as NotFoundResult;
-        result.Should().NotBeNull();
+        actionResult.Result.Should().BeAssignableTo<NotFoundResult>();
     }
 
     [Fact]
@@ -74,10 +72,45 @@ public class InventoryControllerTests
         mock.Setup(s => s.CreateInventoryItem(input)).Returns(item);
         var controller = new InventoryController(mock.Object);
 
-        var actionResult = controller.CreateItem(input);
+        var actionResult = controller.CreateInventoryItem(input);
 
         var result = actionResult.Result as CreatedResult;
         result.Should().NotBeNull();
         result!.Value.Should().BeEquivalentTo(returnData);
+    }
+
+    [Fact]
+    public void UpdateInventoryItem_ResultsInOk()
+    {
+        var input = new UpdateInventoryItemDto("iPhone", "Smartphone", 1, 1000);
+        var item = input.ToInventoryItem();
+        var returnData = InventoryItemDto.From(item);
+        var id = item.Id;
+
+        var mock = new Mock<IInventoryService>();
+        mock.Setup(s => s.TryUpdateInventoryItem(id, input, out item)).Returns(true);
+        var controller = new InventoryController(mock.Object);
+
+        var actionResult = controller.UpdateInventoryItem(id, input);
+
+        var result = actionResult.Result as OkObjectResult;
+        result.Should().NotBeNull();
+        result!.Value.Should().BeEquivalentTo(returnData);
+    }
+
+    [Fact]
+    public void UpdateInventoryItem_ResultsInBadRequest()
+    {
+        var input = new UpdateInventoryItemDto("iPhone", "Smartphone", 1, 1000);
+        InventoryItem item = null!;
+        var id = Guid.NewGuid();
+
+        var mock = new Mock<IInventoryService>();
+        mock.Setup(s => s.TryUpdateInventoryItem(id, input, out item!)).Returns(false);
+        var controller = new InventoryController(mock.Object);
+
+        var actionResult = controller.UpdateInventoryItem(id, input);
+
+        actionResult.Result.Should().BeAssignableTo<BadRequestResult>();
     }
 }

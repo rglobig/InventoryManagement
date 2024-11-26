@@ -1,5 +1,6 @@
 ﻿using InventoryManagement.Application.DataTransferObjects;
 using InventoryManagement.Application.Services;
+using InventoryManagement.Domain;
 using Microsoft.AspNetCore.Mvc;
 
 namespace InventoryManagement.Api.Controllers
@@ -25,7 +26,7 @@ namespace InventoryManagement.Api.Controllers
         {
             var item = inventoryService.GetInventoryItem(id);
 
-            if(item == null) return NotFound();
+            if (item == null) return NotFound();
 
             var data = InventoryItemDto.From(item);
 
@@ -34,11 +35,22 @@ namespace InventoryManagement.Api.Controllers
 
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status201Created)]
-        public ActionResult<InventoryItemDto> CreateItem(CreateInventoryItemDto data)
+        public ActionResult<InventoryItemDto> CreateInventoryItem(CreateInventoryItemDto data)
         {
             var item = inventoryService.CreateInventoryItem(data);
             var dto = InventoryItemDto.From(item);
-            return Created(nameof(CreateItem), dto);
+            return Created(nameof(CreateInventoryItem), dto);
+        }
+
+        [HttpPatch]
+        public ActionResult<InventoryItemDto?> UpdateInventoryItem(Guid id, UpdateInventoryItemDto data)
+        {
+            if (!inventoryService.TryUpdateInventoryItem(id, data, out InventoryItem? item))
+            {
+                return BadRequest();
+            }
+            var dto = InventoryItemDto.From(item!);
+            return Ok(dto);
         }
     }
 }

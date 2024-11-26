@@ -8,4 +8,5 @@ public interface IInventoryService
     ICollection<InventoryItem> GetInventoryItems();
     InventoryItem? GetInventoryItem(Guid id);
     InventoryItem CreateInventoryItem(CreateInventoryItemDto data);
+    bool TryUpdateInventoryItem(Guid id, UpdateInventoryItemDto data, out InventoryItem? inventoryItem);
 }

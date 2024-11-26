@@ -20,4 +20,17 @@ public class InventoryService(IInventoryRepository inventoryRepository) : IInven
     {
         return inventoryRepository.CreateInventoryItem(data.ToInventoryItem());
     }
+
+    public bool TryUpdateInventoryItem(Guid id, UpdateInventoryItemDto data, out InventoryItem? inventoryItem)
+    {
+        inventoryItem = GetInventoryItem(id);
+
+        if(inventoryItem != null)
+        {
+            inventoryItem.Update(data.Name, data.Description, data.Quantity, data.Price);
+            return true;
+        }
+
+        return false;
+    }
 }
