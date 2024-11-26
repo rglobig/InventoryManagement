@@ -83,7 +83,7 @@ public class InventoryControllerTests
     public void UpdateInventoryItem_ResultsInOk()
     {
         var input = new UpdateInventoryItemDto("iPhone", "Smartphone", 1, 1000);
-        var item = input.ToInventoryItem();
+        var item = new InventoryItem("iPhone", "Smartphone", 1, 1000);
         var returnData = InventoryItemDto.From(item);
         var id = item.Id;
 
