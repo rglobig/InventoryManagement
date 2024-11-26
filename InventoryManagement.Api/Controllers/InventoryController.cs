@@ -43,6 +43,8 @@ namespace InventoryManagement.Api.Controllers
         }
 
         [HttpPatch]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public ActionResult<InventoryItemDto?> UpdateInventoryItem(Guid id, UpdateInventoryItemDto data)
         {
             if (!inventoryService.TryUpdateInventoryItem(id, data, out InventoryItem? item))
