@@ -121,21 +121,18 @@ public class InventoryControllerTests
     }
 
     [Fact]
-    public void DeleteInventoryItem_ResultsInOk()
+    public void DeleteInventoryItem_ResultsInNoContent()
     {
         var input = new InventoryItem("iPhone", "Smartphone", 1, 1000);
         var id = input.Id;
-        var returnData = InventoryItemDto.From(input);
 
         var mock = new Mock<IInventoryService>();
         mock.Setup(s => s.TryDeleteInventoryItem(id, out input)).Returns(true);
         var controller = new InventoryController(mock.Object);
 
         var actionResult = controller.DeleteInventoryItem(id);
-        var result = actionResult.Result as OkObjectResult;
+        var result = actionResult.Result as NoContentResult;
         result.Should().NotBeNull();
-        result!.Value.Should().BeEquivalentTo(returnData);
-        mock.Verify(s => s.TryDeleteInventoryItem(id, out input), Times.Once);
     }
 
     [Fact]

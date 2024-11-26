@@ -60,13 +60,12 @@ namespace InventoryManagement.Api.Controllers
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public ActionResult<InventoryItemDto?> DeleteInventoryItem(Guid id)
         {
-            if(!inventoryService.TryDeleteInventoryItem(id, out InventoryItem? item))
+            if(!inventoryService.TryDeleteInventoryItem(id, out _))
             {
                 return BadRequest();
             }
 
-            var dto = InventoryItemDto.From(item!);
-            return Ok(dto);
+            return NoContent();
         }
     }
 }
