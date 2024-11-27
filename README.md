@@ -24,3 +24,29 @@ The project adopts a layered architecture for better organization, testability, 
 ### Testing
 - Each project has a corresponding `*.Tests` project containing unit tests.
 - Integration tests for the API are located in `InventoryManagement.Api.IntegrationTests`.
+
+### Future Ideas
+1. **Versioning of Controllers (in routing)**  
+   Implement API versioning to maintain backward compatibility.
+
+2. **Async Operations**  
+   Ensure full support for asynchronous operations throughout the application to improve performance and scalability.
+
+3. **Database Flexibility**  
+   - Use a database external to the repository (e.g., PostgreSQL with Docker).  
+   - Enable configuration for multiple database types.
+
+4. **Integration Tests Seeding**  
+   Create mechanisms to seed test data for integration tests, ensuring consistent test environments.
+
+5. **CI/CD Pipeline**  
+   Set up continuous integration and continuous deployment pipelines to streamline development and deployment processes.
+
+6. **C# 13 / .NET 9 Update**  
+   Prepare for updates to C# 13 and .NET 9, ensuring compatibility and leveraging new features.
+
+7. **Architecture Tests (e.g., ArchUnitNET)**  
+   Introduce architecture tests to enforce design principles and ensure the application's structure aligns with its intended architecture.
+
+8. **Mediator Pattern (CQRS)**  
+   Implement the mediator pattern for better separation of concerns and support for the CQRS (Command Query Responsibility Segregation) pattern.
