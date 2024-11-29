@@ -39,7 +39,7 @@ jobs:
         echo "PostgreSQL failed to start"
         exit 1
     - name: Run EF Core Migrations
-      run: docker compose run --rm app dotnet ef database update
+      run: docker compose -f "Docker-compose.yml" run --rm app dotnet ef database update
     - name: Test
       run: dotnet test --configuration Release --no-restore --no-build --verbosity normal
     - name: Stop containers
