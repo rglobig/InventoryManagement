@@ -13,7 +13,7 @@ public class InventoryControllerIntegrationTests(WebApplicationFactory<Program> 
         var client = factory.CreateClient();
         var input = new CreateInventoryItemDto("iPhone", "Smartphone", 1, 1000);
 
-        var response = await client.PostAsJsonAsync(@"api/Inventory", input);
+        var response = await client.PostAsJsonAsync(@"api/v1.0/Inventory", input);
 
         response.StatusCode.Should().Be(HttpStatusCode.Created);
         var data = await response.Content.ReadFromJsonAsync<InventoryItemDto>();
@@ -26,7 +26,7 @@ public class InventoryControllerIntegrationTests(WebApplicationFactory<Program> 
     {
         var client = factory.CreateClient();
 
-        var response = await client.GetAsync(@"api/Inventory");
+        var response = await client.GetAsync(@"api/v1.0/Inventory");
 
         response.StatusCode.Should().Be(HttpStatusCode.OK);
         var data = await response.Content.ReadFromJsonAsync<ICollection<InventoryItemDto>>();
@@ -38,7 +38,7 @@ public class InventoryControllerIntegrationTests(WebApplicationFactory<Program> 
     {
         var client = factory.CreateClient();
         var id = "WrongId";
-        var response = await client.GetAsync($@"api/Inventory/{id}");
+        var response = await client.GetAsync($@"api/v1.0/Inventory/{id}");
 
         response.StatusCode.Should().Be(HttpStatusCode.NotFound);
     }
@@ -49,14 +49,14 @@ public class InventoryControllerIntegrationTests(WebApplicationFactory<Program> 
         var client = factory.CreateClient();
 
         var create = new CreateInventoryItemDto("iPhone", "Smartphone", 1, 1000);
-        var createResponse = await client.PostAsJsonAsync(@"api/Inventory", create);
+        var createResponse = await client.PostAsJsonAsync(@"api/v1.0/Inventory", create);
         var createResponseData = await createResponse.Content.ReadFromJsonAsync<InventoryItemDto>();
 
         Assert.NotNull(createResponseData);
 
         var id = createResponseData!.Id;
 
-        var response = await client.GetAsync($@"api/Inventory/{id}");
+        var response = await client.GetAsync($@"api/v1.0/Inventory/{id}");
         var data = await response.Content.ReadFromJsonAsync<InventoryItemDto>();
 
         response.StatusCode.Should().Be(HttpStatusCode.OK);
@@ -69,7 +69,7 @@ public class InventoryControllerIntegrationTests(WebApplicationFactory<Program> 
         var client = factory.CreateClient();
 
         var create = new CreateInventoryItemDto("iPhone", "Smartphone", 1, 1000);
-        var createResponse = await client.PostAsJsonAsync(@"api/Inventory", create);
+        var createResponse = await client.PostAsJsonAsync(@"api/v1.0/Inventory", create);
         var createResponseData = await createResponse.Content.ReadFromJsonAsync<InventoryItemDto>();
 
         Assert.NotNull(createResponseData);
@@ -77,7 +77,7 @@ public class InventoryControllerIntegrationTests(WebApplicationFactory<Program> 
         var id = createResponseData!.Id;
         var input = new UpdateInventoryItemDto("Huawei", "Smartphone", 3, 500);
 
-        var response = await client.PatchAsJsonAsync($"api/Inventory/{id}", input);
+        var response = await client.PatchAsJsonAsync($"api/v1.0/Inventory/{id}", input);
 
         response.StatusCode.Should().Be(HttpStatusCode.OK);
         var data = await response.Content.ReadFromJsonAsync<InventoryItemDto>();
@@ -93,7 +93,7 @@ public class InventoryControllerIntegrationTests(WebApplicationFactory<Program> 
         var id = "WrongId";
         var input = new UpdateInventoryItemDto("Huawei", "Smartphone", 3, 500);
 
-        var response = await client.PatchAsJsonAsync($"api/Inventory/{id}", input);
+        var response = await client.PatchAsJsonAsync($"api/v1.0/Inventory/{id}", input);
 
         response.StatusCode.Should().Be(HttpStatusCode.BadRequest);
     }
@@ -104,14 +104,14 @@ public class InventoryControllerIntegrationTests(WebApplicationFactory<Program> 
         var client = factory.CreateClient();
 
         var create = new CreateInventoryItemDto("iPhone", "Smartphone", 1, 1000);
-        var createResponse = await client.PostAsJsonAsync(@"api/Inventory", create);
+        var createResponse = await client.PostAsJsonAsync(@"api/v1.0/Inventory", create);
         var createResponseData = await createResponse.Content.ReadFromJsonAsync<InventoryItemDto>();
 
         Assert.NotNull(createResponseData);
 
         var id = createResponseData!.Id;
 
-        var response = await client.DeleteAsync($"api/Inventory/{id}");
+        var response = await client.DeleteAsync($"api/v1.0/Inventory/{id}");
 
         response.StatusCode.Should().Be(HttpStatusCode.NoContent);
     }
@@ -123,7 +123,7 @@ public class InventoryControllerIntegrationTests(WebApplicationFactory<Program> 
 
         var id = "WrongId";
 
-        var response = await client.DeleteAsync($"api/Inventory/{id}");
+        var response = await client.DeleteAsync($"api/v1.0/Inventory/{id}");
 
         response.StatusCode.Should().Be(HttpStatusCode.BadRequest);
     }

@@ -1,15 +1,17 @@
-﻿using InventoryManagement.Application.DataTransferObjects;
+﻿using Asp.Versioning;
+using InventoryManagement.Application.DataTransferObjects;
 using InventoryManagement.Application.Services;
-using InventoryManagement.Domain;
 using Microsoft.AspNetCore.Mvc;
 
 namespace InventoryManagement.Api.Controllers
 {
-    [Route("api/[controller]")]
+    [ApiVersion("1.0")]
+    [Route("api/v{version:apiVersion}/[controller]")]
     [ApiController]
     public class InventoryController(IInventoryService inventoryService) : ControllerBase
     {
         [HttpGet]
+        [MapToApiVersion("1.0")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<ActionResult<ICollection<InventoryItemDto>>> GetAllInventoryItemsAsync(CancellationToken cancellationToken)
         {
@@ -19,6 +21,7 @@ namespace InventoryManagement.Api.Controllers
         }
 
         [HttpGet]
+        [MapToApiVersion("1.0")]
         [Route("{id:guid}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -34,6 +37,7 @@ namespace InventoryManagement.Api.Controllers
         }
 
         [HttpPost]
+        [MapToApiVersion("1.0")]
         [ProducesResponseType(StatusCodes.Status201Created)]
         public async ValueTask<ActionResult<InventoryItemDto>> CreateInventoryItemAsync(CreateInventoryItemDto data, CancellationToken cancellationToken)
         {
@@ -43,6 +47,7 @@ namespace InventoryManagement.Api.Controllers
         }
 
         [HttpPatch("{id:guid}")]
+        [MapToApiVersion("1.0")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async ValueTask<ActionResult<InventoryItemDto?>> UpdateInventoryItemAsync([FromRoute] Guid id, UpdateInventoryItemDto data, CancellationToken cancellationToken)
@@ -56,6 +61,7 @@ namespace InventoryManagement.Api.Controllers
         }
 
         [HttpDelete("{id:guid}")]
+        [MapToApiVersion("1.0")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async ValueTask<ActionResult> DeleteInventoryItemAsync([FromRoute] Guid id, CancellationToken cancellationToken)
