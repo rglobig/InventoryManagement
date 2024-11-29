@@ -13,7 +13,7 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.AddScoped<IInventoryRepository, InventoryRepository>();
 builder.Services.AddTransient<IInventoryService, InventoryService>();
-builder.Services.AddDbContext<InventoryDbContext>(UseSqlite(builder));
+builder.Services.AddDbContext<InventoryDbContext>(UseNpgsql(builder));
 builder.Services.AddApiVersioning(AddVersioning).AddApiExplorer(AddVersionApiExplorer);
 
 var app = builder.Build();
@@ -22,10 +22,6 @@ if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
-
-    using var scope = app.Services.CreateScope();
-    var dbContext = scope.ServiceProvider.GetRequiredService<InventoryDbContext>();
-    dbContext.Database.Migrate();
 }
 
 app.UseHttpsRedirection();
@@ -34,9 +30,9 @@ app.MapControllers();
 
 app.Run();
 
-static Action<DbContextOptionsBuilder> UseSqlite(WebApplicationBuilder builder)
+static Action<DbContextOptionsBuilder> UseNpgsql(WebApplicationBuilder builder)
 {
-    return options => options.UseSqlite(builder.Configuration.GetConnectionString("InventoryDb"));
+    return options => options.UseNpgsql(builder.Configuration.GetConnectionString("InventoryDb"));
 }
 
 static void AddVersioning(ApiVersioningOptions option)

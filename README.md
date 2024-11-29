@@ -26,16 +26,6 @@ The project adopts a layered architecture for better organization, testability, 
 - Integration tests for the API are located in `InventoryManagement.Api.IntegrationTests`.
 
 ### Future Ideas
-1. **Versioning of Controllers (in routing)**  
-   Implement API versioning to maintain backward compatibility.
-
-2. **Async Operations**  
-   Ensure full support for asynchronous operations throughout the application to improve performance and scalability.
-
-3. **Database Flexibility**  
-   - Use a database external to the repository (e.g., PostgreSQL with Docker).  
-   - Enable configuration for multiple database types.
-
 4. **Integration Tests Seeding**  
    Create mechanisms to seed test data for integration tests, ensuring consistent test environments.
 
