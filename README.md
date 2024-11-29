@@ -5,7 +5,7 @@ This project demonstrates CRUD operations using a persistent database and a Web 
 
 ## Tech Stack
 - **ASP.NET Core**: Framework for building the Web API.
-- **SQLite Database**: Lightweight database for persistence.
+- **PostgreSQL**: Database for persistence.
 - **EF Core 9**: Entity Framework Core for ORM functionality.
 - **C# 12**: Programming language used for development.
 - **.NET 8**: The runtime powering the application.
@@ -26,17 +26,17 @@ The project adopts a layered architecture for better organization, testability, 
 - Integration tests for the API are located in `InventoryManagement.Api.IntegrationTests`.
 
 ### Future Ideas
-4. **Integration Tests Seeding**  
+1. **Integration Tests Seeding**  
    Create mechanisms to seed test data for integration tests, ensuring consistent test environments.
 
-5. **CI/CD Pipeline**  
+2. **CI/CD Pipeline**  
    Set up continuous integration and continuous deployment pipelines to streamline development and deployment processes.
 
-6. **C# 13 / .NET 9 Update**  
+3. **C# 13 / .NET 9 Update**  
    Prepare for updates to C# 13 and .NET 9, ensuring compatibility and leveraging new features.
 
-7. **Architecture Tests (e.g., ArchUnitNET)**  
+4. **Architecture Tests (e.g., ArchUnitNET)**  
    Introduce architecture tests to enforce design principles and ensure the application's structure aligns with its intended architecture.
 
-8. **Mediator Pattern (CQRS)**  
+5. **Mediator Pattern (CQRS)**  
    Implement the mediator pattern for better separation of concerns and support for the CQRS (Command Query Responsibility Segregation) pattern.
