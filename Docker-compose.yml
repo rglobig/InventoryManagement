@@ -1,4 +1,4 @@
-name: InventoryManagement
+name: inventorymanagement
 
 services:
   postgres:
