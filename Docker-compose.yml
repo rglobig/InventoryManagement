@@ -29,6 +29,7 @@ services:
       - ./bin/Release:/app/bin/Release
       - ./obj:/app/obj
     working_dir: /app
+    command: /bin/bash -c "dotnet ef database update"
 
 networks:
   eim:
