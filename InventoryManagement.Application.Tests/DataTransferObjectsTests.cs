@@ -27,6 +27,7 @@ public class DataTransferObjectsTests
         var item = InventoryItemDto.From(input);
 
         Assert.NotNull(item);
+        Assert.Equal(input.Id, item.Id);
         Assert.Equal(input.Name, item.Name);
         Assert.Equal(input.Description, item.Description);
         Assert.Equal(input.Quantity, item.Quantity);
