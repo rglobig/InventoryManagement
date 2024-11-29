@@ -32,7 +32,7 @@ app.Run();
 
 static Action<DbContextOptionsBuilder> UseNpgsql(WebApplicationBuilder builder)
 {
-    return options => options.UseNpgsql(builder.Configuration.GetConnectionString("InventoryDb"));
+    return options => options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection"));
 }
 
 static void AddVersioning(ApiVersioningOptions option)
