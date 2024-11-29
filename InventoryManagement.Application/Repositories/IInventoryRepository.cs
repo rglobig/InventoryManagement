@@ -4,8 +4,8 @@ namespace InventoryManagement.Application.Repositories;
 
 public interface IInventoryRepository
 {
-    ICollection<InventoryItem> GetInventoryItems();
-    InventoryItem? GetInventoryItem(Guid id);
-    InventoryItem CreateInventoryItem(InventoryItem item);
-    void DeleteInventoryItem(InventoryItem item);
+    Task<ICollection<InventoryItem>> GetInventoryItems(CancellationToken cancellationToken);
+    ValueTask<InventoryItem?> GetInventoryItem(Guid id, CancellationToken cancellationToken);
+    ValueTask<InventoryItem> CreateInventoryItem(InventoryItem item, CancellationToken cancellationToken);
+    ValueTask DeleteInventoryItem(InventoryItem item, CancellationToken cancellationToken);
 }

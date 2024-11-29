@@ -6,38 +6,40 @@ namespace InventoryManagement.Application.Services;
 
 public class InventoryService(IInventoryRepository inventoryRepository) : IInventoryService
 {
-    public ICollection<InventoryItem> GetInventoryItems()
+    public async Task<ICollection<InventoryItem>> GetInventoryItems(CancellationToken cancellationToken)
     {
-        return inventoryRepository.GetInventoryItems();
+        return await inventoryRepository.GetInventoryItems(cancellationToken);
     }
 
-    public InventoryItem? GetInventoryItem(Guid id)
+    public async ValueTask<InventoryItem?> GetInventoryItem(Guid id, CancellationToken cancellationToken)
     {
-        return inventoryRepository.GetInventoryItem(id);
+        return await inventoryRepository.GetInventoryItem(id, cancellationToken);
     }
 
-    public InventoryItem CreateInventoryItem(CreateInventoryItemDto data)
+    public async ValueTask<InventoryItem> CreateInventoryItem(CreateInventoryItemDto data, CancellationToken cancellationToken)
     {
-        return inventoryRepository.CreateInventoryItem(data.ToInventoryItem());
+        return await inventoryRepository.CreateInventoryItem(data.ToInventoryItem(), cancellationToken);
     }
 
-    public bool TryUpdateInventoryItem(Guid id, UpdateInventoryItemDto data, out InventoryItem? inventoryItem)
+    public async ValueTask<InventoryItem?> UpdateInventoryItem(Guid id, UpdateInventoryItemDto data, CancellationToken cancellationToken)
     {
-        inventoryItem = GetInventoryItem(id);
+        var inventoryItem = await GetInventoryItem(id, cancellationToken);
 
-        if (inventoryItem == null) return false;
+        if (inventoryItem == null) return null;
 
         inventoryItem.Update(data.Name, data.Description, data.Quantity, data.Price);
-        return true;
+
+        return inventoryItem;
     }
 
-    public bool TryDeleteInventoryItem(Guid id, out InventoryItem? inventoryItem)
+    public async ValueTask<InventoryItem?> DeleteInventoryItem(Guid id, CancellationToken cancellationToken)
     {
-        inventoryItem = GetInventoryItem(id);
+        var inventoryItem = await GetInventoryItem(id, cancellationToken);
 
-        if (inventoryItem == null) return false;
+        if (inventoryItem == null) return null;
 
-        inventoryRepository.DeleteInventoryItem(inventoryItem);
-        return true;
+        await inventoryRepository.DeleteInventoryItem(inventoryItem, cancellationToken);
+
+        return inventoryItem;
     }
 }

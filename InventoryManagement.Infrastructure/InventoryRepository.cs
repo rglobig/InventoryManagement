@@ -1,30 +1,34 @@
 ﻿using InventoryManagement.Application.Repositories;
 using InventoryManagement.Domain;
+using Microsoft.EntityFrameworkCore;
 
 namespace InventoryManagement.Infrastructure;
 
 public class InventoryRepository(InventoryDbContext dbContext) : IInventoryRepository
 {
-    public InventoryItem CreateInventoryItem(InventoryItem item)
+    public async ValueTask<InventoryItem> CreateInventoryItem(InventoryItem item, CancellationToken cancellationToken)
     {
         var entity = dbContext.InventoryItems.Add(item);
-        dbContext.SaveChanges();
+        await dbContext.SaveChangesAsync(cancellationToken);
         return entity.Entity;
     }
 
-    public void DeleteInventoryItem(InventoryItem item)
+    public async ValueTask DeleteInventoryItem(InventoryItem item, CancellationToken cancellationToken)
     {
         dbContext.InventoryItems.Remove(item);
-        dbContext.SaveChanges();
+        await dbContext.SaveChangesAsync(cancellationToken);
     }
 
-    public InventoryItem? GetInventoryItem(Guid id)
+    public async ValueTask<InventoryItem?> GetInventoryItem(Guid id, CancellationToken cancellationToken)
     {
-        return dbContext.InventoryItems.Find(id);
+        return await dbContext.InventoryItems.FindAsync(id, cancellationToken);
     }
 
-    public ICollection<InventoryItem> GetInventoryItems()
+    public async Task<ICollection<InventoryItem>> GetInventoryItems(CancellationToken cancellationToken)
     {
-        return dbContext.InventoryItems.OrderBy(item => item.Name).ToList();
+        var items = await dbContext.InventoryItems
+            .OrderBy(item => item.Name)
+            .ToListAsync(cancellationToken);
+        return items;
     }
 }
