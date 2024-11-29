@@ -26,7 +26,8 @@ services:
     depends_on:
       - postgres
     volumes:
-      - .:/app
+      - ./bin/Release:/app/bin/Release
+      - ./obj:/app/obj
     working_dir: /app
 
 networks:
