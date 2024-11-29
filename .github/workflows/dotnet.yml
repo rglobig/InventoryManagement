@@ -26,6 +26,20 @@ jobs:
       run: dotnet restore
     - name: Build
       run: dotnet build --configuration Release --no-restore
+    - name: Wait for PostgreSQL to be ready
+      run: |
+        for i in {1..10}; do
+          if docker exec $(docker ps -qf "name=postgres") pg_isready -U postgres; then
+            echo "PostgreSQL is ready"
+            exit 0
+          fi
+          echo "Waiting for PostgreSQL..."
+          sleep 5
+        done
+        echo "PostgreSQL failed to start"
+        exit 1
+    - name: Run EF Core Migrations
+      run: docker-compose run --rm app dotnet ef database update
     - name: Test
       run: dotnet test --configuration Release --no-restore --no-build --verbosity normal
     - name: Stop containers
