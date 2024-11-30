@@ -28,7 +28,7 @@ services:
     volumes:
       - .:/app
     working_dir: /app
-    command: /bin/bash -c "dotnet ef database update --project InventoryManagement.Infrastructure --startup-project InventoryManagement.Api"
+    command: /bin/bash -c "dotnet ef database update --project source/InventoryManagement.Infrastructure --startup-project source/InventoryManagement.Api"
 
 networks:
   eim:
