@@ -8,31 +8,21 @@ services:
       POSTGRES_USER: user
       POSTGRES_PASSWORD: secret
       POSTGRES_DB: postgres
-    networks: [eim]
+    networks: [inventorymanagementnetwork]
     ports: ["5432:5432"]
     volumes:
       - type: volume
         source: postgres-data
         target: /var/lib/postgresql/data
-
-  app:
-    container_name: inventory-management-app
-    image: mcr.microsoft.com/dotnet/sdk:8.0
-    build:
-      context: .
-    networks: [eim]
-    environment:
-      - ConnectionStrings__DefaultConnection=Host=inventory-management-postgres;Port=5432;Database=postgres;Username=user;Password=secret
-    depends_on:
-      - postgres
-    volumes:
-      - .:/app
-    working_dir: /app
-    command: /bin/bash -c "dotnet ef database update --project source/InventoryManagement.Infrastructure --startup-project source/InventoryManagement.Api"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
 
 networks:
-  eim:
-    name: eim
+  inventorymanagementnetwork:
+    name: inventorymanagementnetwork
 
 volumes:
   postgres-data:
