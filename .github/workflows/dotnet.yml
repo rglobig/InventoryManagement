@@ -37,8 +37,8 @@ jobs:
         PGUSER: ${{ secrets.DB_USER }}
         PGPASSWORD: ${{ secrets.DB_PASSWORD }}
       run: |
-        psql -d postgres -f init_database.sql
-        psql -d postgres -f seed_database.sql
+        psql -d postgres -f sql_scripts/init_database.sql
+        psql -d postgres -f sql_scripts/seed_database.sql
 
     - name: Setup .NET
       uses: actions/setup-dotnet@v4
