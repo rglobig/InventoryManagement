@@ -1,0 +1,56 @@
+-- Seed the InventoryItems table with 50 entries
+START TRANSACTION;
+
+INSERT INTO "InventoryItems" ("Id", "Name", "Description", "Quantity", "Price", "CreatedAt", "UpdatedAt")
+VALUES
+
+(gen_random_uuid(), 'Laptop', 'A high-performance laptop', 10, 1200.00, now(), now()),
+(gen_random_uuid(), 'Mouse', 'Wireless optical mouse', 50, 20.00, now(), now()),
+(gen_random_uuid(), 'Keyboard', 'Mechanical keyboard', 30, 80.00, now(), now()),
+(gen_random_uuid(), 'Monitor', '27-inch 4K monitor', 15, 350.00, now(), now()),
+(gen_random_uuid(), 'Headphones', 'Noise-cancelling headphones', 25, 150.00, now(), now()),
+(gen_random_uuid(), 'Printer', 'All-in-one printer', 10, 250.00, now(), now()),
+(gen_random_uuid(), 'Tablet', '10-inch tablet with stylus', 20, 400.00, now(), now()),
+(gen_random_uuid(), 'Camera', 'DSLR camera', 5, 1000.00, now(), now()),
+(gen_random_uuid(), 'Tripod', 'Camera tripod', 40, 60.00, now(), now()),
+(gen_random_uuid(), 'Speakers', 'Bluetooth speakers', 35, 120.00, now(), now()),
+(gen_random_uuid(), 'Webcam', '1080p webcam', 25, 75.00, now(), now()),
+(gen_random_uuid(), 'Microphone', 'Podcasting microphone', 10, 150.00, now(), now()),
+(gen_random_uuid(), 'Smartphone', 'Latest model smartphone', 8, 999.99, now(), now()),
+(gen_random_uuid(), 'Smartwatch', 'Smartwatch with fitness tracker', 18, 199.99, now(), now()),
+(gen_random_uuid(), 'Router', 'High-speed Wi-Fi router', 12, 120.00, now(), now()),
+(gen_random_uuid(), 'External Hard Drive', '2TB external hard drive', 20, 80.00, now(), now()),
+(gen_random_uuid(), 'SSD', '1TB solid-state drive', 15, 150.00, now(), now()),
+(gen_random_uuid(), 'Graphics Card', 'High-end graphics card', 5, 600.00, now(), now()),
+(gen_random_uuid(), 'Power Bank', 'Portable power bank', 50, 40.00, now(), now()),
+(gen_random_uuid(), 'Charger', 'Universal charger', 30, 25.00, now(), now()),
+(gen_random_uuid(), 'HDMI Cable', '6-foot HDMI cable', 60, 15.00, now(), now()),
+(gen_random_uuid(), 'USB Hub', '4-port USB hub', 40, 20.00, now(), now()),
+(gen_random_uuid(), 'Desk Lamp', 'LED desk lamp', 30, 35.00, now(), now()),
+(gen_random_uuid(), 'Ergonomic Chair', 'Adjustable ergonomic chair', 12, 300.00, now(), now()),
+
+(gen_random_uuid(), 'Desk', 'Wooden office desk', 8, 500.00, now(), now()),
+(gen_random_uuid(), 'Pen Tablet', 'Drawing tablet for artists', 10, 250.00, now(), now()),
+(gen_random_uuid(), 'Projector', '4K home theater projector', 5, 900.00, now(), now()),
+(gen_random_uuid(), 'Whiteboard', 'Magnetic whiteboard', 15, 100.00, now(), now()),
+(gen_random_uuid(), 'Gaming Console', 'Latest gaming console', 6, 500.00, now(), now()),
+(gen_random_uuid(), 'VR Headset', 'Virtual reality headset', 5, 600.00, now(), now()),
+(gen_random_uuid(), 'Keyboard Case', 'Protective keyboard case', 20, 50.00, now(), now()),
+(gen_random_uuid(), 'Smart Bulbs', 'Wi-Fi connected smart bulbs', 25, 15.00, now(), now()),
+(gen_random_uuid(), 'Electric Kettle', 'Stainless steel electric kettle', 20, 40.00, now(), now()),
+(gen_random_uuid(), 'Coffee Machine', 'Espresso coffee machine', 10, 250.00, now(), now()),
+(gen_random_uuid(), 'Vacuum Cleaner', 'Robot vacuum cleaner', 8, 400.00, now(), now()),
+(gen_random_uuid(), 'Blender', 'High-speed blender', 15, 150.00, now(), now()),
+(gen_random_uuid(), 'Fan', 'Portable desk fan', 20, 30.00, now(), now()),
+(gen_random_uuid(), 'Air Purifier', 'HEPA air purifier', 10, 200.00, now(), now()),
+(gen_random_uuid(), 'Flash Drive', '128GB USB flash drive', 50, 25.00, now(), now()),
+(gen_random_uuid(), 'Wireless Charger', 'Fast wireless charging pad', 25, 30.00, now(), now()),
+(gen_random_uuid(), 'Portable Speaker', 'Compact Bluetooth speaker', 20, 50.00, now(), now()),
+(gen_random_uuid(), 'Notebook', 'Lined spiral notebook', 100, 5.00, now(), now()),
+(gen_random_uuid(), 'Pen Set', 'Luxury pen set', 30, 40.00, now(), now()),
+(gen_random_uuid(), 'Backpack', 'Water-resistant laptop backpack', 15, 60.00, now(), now()),
+(gen_random_uuid(), 'Sunglasses', 'Polarized sunglasses', 25, 80.00, now(), now()),
+(gen_random_uuid(), 'Watch', 'Classic analog watch', 20, 120.00, now(), now()),
+(gen_random_uuid(), 'Suitcase', 'Hard-shell carry-on suitcase', 10, 150.00, now(), now());
+
+COMMIT;

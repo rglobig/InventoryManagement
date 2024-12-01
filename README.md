@@ -26,17 +26,11 @@ The project adopts a layered architecture for better organization, testability, 
 - Integration tests for the API are located in `InventoryManagement.Api.IntegrationTests`.
 
 ### Future Ideas
-1. **Integration Tests Seeding**  
-   Create mechanisms to seed test data for integration tests, ensuring consistent test environments.
-
-2. **CI/CD Pipeline**  
-   Set up continuous integration and continuous deployment pipelines to streamline development and deployment processes.
-
-3. **C# 13 / .NET 9 Update**  
+1. **C# 13 / .NET 9 Update**  
    Prepare for updates to C# 13 and .NET 9, ensuring compatibility and leveraging new features.
 
-4. **Architecture Tests (e.g., ArchUnitNET)**  
+2. **Architecture Tests (e.g., ArchUnitNET)**  
    Introduce architecture tests to enforce design principles and ensure the application's structure aligns with its intended architecture.
 
-5. **Mediator Pattern (CQRS)**  
+3. **Mediator Pattern (CQRS)**  
    Implement the mediator pattern for better separation of concerns and support for the CQRS (Command Query Responsibility Segregation) pattern.
