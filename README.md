@@ -91,3 +91,6 @@ graph TD
 
 4. **📱 Implementing .NET MAUI for Cross-Platform UI**  
    **.NET MAUI** (Multi-platform App UI) can be used to create a **cross-platform** application that works across mobile and desktop platforms (Android, iOS, macOS, and Windows) using a single codebase.
+
+5. **🔐 Implementing Authentication and Authorization**  
+   Introduce authentication and authorization to secure the Web API. This will ensure that only authorized users can access specific resources.
