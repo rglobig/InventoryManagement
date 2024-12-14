@@ -37,7 +37,11 @@ services:
     depends_on:
       - postgres
     environment:
-      - ConnectionStrings__DefaultConnection=Host=postgres:${DB_PORT};UserName=${DB_USERNAME};Password=${DB_PASSWORD};Database=${DB_NAME}
+      - DB_HOST=postgres
+      - DB_PORT=${DB_PORT}
+      - DB_USERNAME=${DB_USERNAME}
+      - DB_PASSWORD=${DB_PASSWORD}
+      - DB_NAME=${DB_NAME}
       - ASPNETCORE_ENVIRONMENT=Development
     networks: [inventorymanagementnetwork]
     ports: ["8080:8080", "8081:8081"]
