@@ -10,20 +10,26 @@ jobs:
   build:
     name: Build and Test
     runs-on: ubuntu-latest
+    env:
+      DB_HOST: ${{ secrets.DB_HOST }}
+      DB_PORT: ${{ secrets.DB_PORT }}
+      DB_USERNAME: ${{ secrets.DB_USERNAME }}
+      DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
+      DB_NAME: ${{ secrets.DB_NAME }}
     services:
       postgres:
         image: postgres:latest
         env:
           POSTGRES_USER: ${{ secrets.DB_USER }}
           POSTGRES_PASSWORD: ${{ secrets.DB_PASSWORD }}
-          POSTGRES_DB: postgres
+          POSTGRES_DB: ${{ secrets.DB_NAME }}
         options: >-
           --health-cmd pg_isready
           --health-interval 10s
           --health-timeout 5s
           --health-retries 5
         ports:
-          - 5432:5432
+          - ${{ secrets.DB_PORT }}:${{ secrets.DB_PORT }}
     steps:
     - uses: actions/checkout@v4
   
@@ -32,8 +38,8 @@ jobs:
 
     - name: Run SQL Script
       env:
-        PGHOST: localhost
-        PGPORT: 5432
+        PGHOST: ${{ secrets.DB_HOST }}
+        PGPORT: ${{ secrets.DB_PORT }}
         PGUSER: ${{ secrets.DB_USER }}
         PGPASSWORD: ${{ secrets.DB_PASSWORD }}
       run: |
