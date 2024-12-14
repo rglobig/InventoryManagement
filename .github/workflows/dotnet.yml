@@ -12,7 +12,7 @@ jobs:
     runs-on: ubuntu-latest
     env:
       DB_HOST: ${{ secrets.DB_HOST }}
-      DB_PORT: ${{ secrets.DB_PORT }}
+      DB_PORT: 5432
       DB_USERNAME: ${{ secrets.DB_USERNAME }}
       DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
       DB_NAME: ${{ secrets.DB_NAME }}
@@ -29,7 +29,7 @@ jobs:
           --health-timeout 5s
           --health-retries 5
         ports:
-          - ${{ secrets.DB_PORT }}:${{ secrets.DB_PORT }}
+          - "5432:5432"
     steps:
     - uses: actions/checkout@v4
   
@@ -39,7 +39,7 @@ jobs:
     - name: Run SQL Script
       env:
         PGHOST: ${{ secrets.DB_HOST }}
-        PGPORT: ${{ secrets.DB_PORT }}
+        PGPORT: 5432
         PGUSER: ${{ secrets.DB_USER }}
         PGPASSWORD: ${{ secrets.DB_PASSWORD }}
       run: |
