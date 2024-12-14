@@ -7,8 +7,8 @@ This project demonstrates CRUD operations using a persistent database and a Web 
 - **ASP.NET Core**: Framework for building the Web API.
 - **PostgreSQL**: Database for persistence.
 - **EF Core 9**: Entity Framework Core for ORM functionality.
-- **C# 12**: Programming language used for development.
-- **.NET 8**: The runtime powering the application.
+- **C# 13**: Programming language used for development.
+- **.NET 9**: The runtime powering the application.
 - **xUnit**: Unit testing framework.
 - **Moq**: Mocking framework for test isolation.
 - **FluentAssertions**: Library for expressive test assertions.
@@ -26,9 +26,6 @@ The project adopts a layered architecture for better organization, testability, 
 - Integration tests for the API are located in `InventoryManagement.Api.IntegrationTests`.
 
 ### Future Ideas
-1. **C# 13 / .NET 9 Update**  
-   Prepare for updates to C# 13 and .NET 9, ensuring compatibility and leveraging new features.
-
 2. **Architecture Tests (e.g., ArchUnitNET)**  
    Introduce architecture tests to enforce design principles and ensure the application's structure aligns with its intended architecture.
 
