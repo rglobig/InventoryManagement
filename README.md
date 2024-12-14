@@ -12,6 +12,34 @@ This project demonstrates **CRUD operations** using a persistent database and a 
 - **xUnit**: Unit testing framework.
 - **Moq**: Mocking framework for test isolation.
 - **FluentAssertions**: Library for expressive test assertions.
+```mermaid
+flowchart TD
+    A[ASP.NET Core] --> B[PostgreSQL]
+    A --> C[EF Core 9]
+    A --> D[C# 13]
+    A --> E[.NET 9]
+    A --> F[xUnit]
+    A --> G[Moq]
+    A --> H[FluentAssertions]
+
+    subgraph Api Layer
+        A
+    end
+
+    subgraph Data Layer
+        B
+        C
+    end
+
+    subgraph Test Layer
+        F
+        G
+        H
+    end
+
+    A --> I[Swagger API Integration]
+    I --> B
+```
 
 ## 🗂️ Project Structure
 The project adopts a **layered architecture** for better organization, testability, and scalability:
@@ -20,6 +48,32 @@ The project adopts a **layered architecture** for better organization, testabili
 - **Application**: Contains business logic abstractions, including services and data transfer objects (DTOs).
 - **Domain**: Defines domain-specific entities and logic.
 - **Infrastructure**: Implements persistence, including database configurations and migrations.
+```mermaid
+graph TD
+    A[Api] --> B[Application]
+    B --> C[Domain]
+    B --> D[Infrastructure]
+    C --> E[Entities]
+    D --> F[Persistence]
+
+    subgraph "Api Layer"
+        A
+    end
+
+    subgraph "Application Layer"
+        B
+    end
+
+    subgraph "Domain Layer"
+        C
+        E
+    end
+
+    subgraph "Infrastructure Layer"
+        D
+        F
+    end
+```
 
 ### 🧪 Testing
 - Each project has a corresponding `*.Tests` project containing **unit tests**.
