@@ -4,8 +4,11 @@ using InventoryManagement.Application.Repositories;
 using InventoryManagement.Application.Services;
 using InventoryManagement.Infrastructure;
 using Microsoft.EntityFrameworkCore;
+using dotenv.net;
 
+DotEnv.Load();
 var builder = WebApplication.CreateBuilder(args);
+builder.Configuration.AddEnvironmentVariables();
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
@@ -32,7 +35,14 @@ app.Run();
 
 static Action<DbContextOptionsBuilder> UseNpgsql(WebApplicationBuilder builder)
 {
-    return options => options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection"));
+    var host = builder.Configuration["DB_HOST"];
+    var port = builder.Configuration["DB_PORT"];
+    var username = builder.Configuration["DB_USERNAME"];
+    var password = builder.Configuration["DB_PASSWORD"];
+    var name = builder.Configuration["DB_NAME"];
+    var defaultConnection = $"Host={host};Port={port};UserName={username};Password={password};Database={name}";
+    Console.WriteLine($"Connection string: {defaultConnection}");
+    return options => options.UseNpgsql(defaultConnection);
 }
 
 static void AddVersioning(ApiVersioningOptions option)
