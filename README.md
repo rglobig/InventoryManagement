@@ -26,8 +26,14 @@ The project adopts a layered architecture for better organization, testability, 
 - Integration tests for the API are located in `InventoryManagement.Api.IntegrationTests`.
 
 ### Future Ideas
-2. **Architecture Tests (e.g., ArchUnitNET)**  
+1. **Architecture Tests (e.g., ArchUnitNET)**  
    Introduce architecture tests to enforce design principles and ensure the application's structure aligns with its intended architecture.
 
-3. **Mediator Pattern (CQRS)**  
+2. **Mediator Pattern (CQRS)**  
    Implement the mediator pattern for better separation of concerns and support for the CQRS (Command Query Responsibility Segregation) pattern.
+   
+3. **Adding GraphQL as a Second Web API**  
+   While the project currently uses a traditional RESTful Web API, adding GraphQL as a second API will enhance flexibility and provide more efficient querying capabilities.
+
+4. **Implementing .NET MAUI for Cross-Platform UI**  
+   .NET MAUI (Multi-platform App UI) can be used to create a cross-platform application that works across mobile and desktop platforms (Android, iOS, macOS, and Windows) using a single codebase.
