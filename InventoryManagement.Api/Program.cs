@@ -41,7 +41,6 @@ static Action<DbContextOptionsBuilder> UseNpgsql(WebApplicationBuilder builder)
     var password = builder.Configuration["DB_PASSWORD"];
     var name = builder.Configuration["DB_NAME"];
     var defaultConnection = $"Host={host};Port={port};UserName={username};Password={password};Database={name}";
-    Console.WriteLine($"Connection string: {defaultConnection}");
     return options => options.UseNpgsql(defaultConnection);
 }
 
