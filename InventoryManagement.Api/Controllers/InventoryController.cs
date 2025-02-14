@@ -46,7 +46,7 @@ namespace InventoryManagement.Api.Controllers
             var item = await inventoryService.CreateInventoryItem(data, cancellationToken);
             var dto = InventoryItemDto.From(item);
 
-            return CreatedAtRoute(nameof(GetInventoryItemWithIdAsync), item.Id, item);
+            return Created(nameof(GetInventoryItemWithIdAsync), item);
         }
 
         [HttpPatch("{id:guid}")]
