@@ -81,7 +81,7 @@ public class InventoryControllerTests
 
         var actionResult = await controller.CreateInventoryItemAsync(input, token);
 
-        var result = actionResult.Result as CreatedResult;
+        var result = actionResult.Result as CreatedAtRouteResult;
         result.Should().NotBeNull();
         result!.Value.Should().BeEquivalentTo(returnData);
         mock.Verify(s => s.CreateInventoryItem(input, token), Times.Once);
