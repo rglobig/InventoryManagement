@@ -12,7 +12,7 @@ namespace InventoryManagement.Api.Controllers
     {
         [HttpGet]
         [MapToApiVersion("1.0")]
-        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ICollection<InventoryItemDto>))]
         public async Task<ActionResult<ICollection<InventoryItemDto>>> GetAllInventoryItemsAsync(CancellationToken cancellationToken)
         {
             var items = await inventoryService.GetInventoryItems(cancellationToken);
@@ -20,10 +20,9 @@ namespace InventoryManagement.Api.Controllers
             return Ok(data);
         }
 
-        [HttpGet]
+        [HttpGet("{id:guid}")]
         [MapToApiVersion("1.0")]
-        [Route("{id:guid}")]
-        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(InventoryItemDto))]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async ValueTask<ActionResult<InventoryItemDto?>> GetInventoryItemWithIdAsync([FromRoute] Guid id, CancellationToken cancellationToken)
         {
@@ -38,31 +37,35 @@ namespace InventoryManagement.Api.Controllers
 
         [HttpPost]
         [MapToApiVersion("1.0")]
-        [ProducesResponseType(StatusCodes.Status201Created)]
-        public async ValueTask<ActionResult<InventoryItemDto>> CreateInventoryItemAsync(CreateInventoryItemDto data, CancellationToken cancellationToken)
+        [ProducesResponseType(StatusCodes.Status201Created, Type = typeof(InventoryItemDto))]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public async ValueTask<ActionResult<InventoryItemDto>> CreateInventoryItemAsync([FromBody] CreateInventoryItemDto data, CancellationToken cancellationToken)
         {
+            if(data is null) return BadRequest();
+
             var item = await inventoryService.CreateInventoryItem(data, cancellationToken);
             var dto = InventoryItemDto.From(item);
-            return Created(nameof(CreateInventoryItemAsync), dto);
+
+            return CreatedAtRoute(nameof(GetInventoryItemWithIdAsync), item.Id, item);
         }
 
         [HttpPatch("{id:guid}")]
         [MapToApiVersion("1.0")]
-        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(InventoryItemDto))]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async ValueTask<ActionResult<InventoryItemDto?>> UpdateInventoryItemAsync([FromRoute] Guid id, UpdateInventoryItemDto data, CancellationToken cancellationToken)
+        public async ValueTask<ActionResult<InventoryItemDto?>> UpdateInventoryItemAsync([FromRoute] Guid id, [FromBody] UpdateInventoryItemDto data, CancellationToken cancellationToken)
         {
             var item = await inventoryService.UpdateInventoryItem(id, data, cancellationToken);
 
             if (item == null) return BadRequest();
 
-            var dto = InventoryItemDto.From(item!);
+            var dto = InventoryItemDto.From(item);
             return Ok(dto);
         }
 
         [HttpDelete("{id:guid}")]
         [MapToApiVersion("1.0")]
-        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async ValueTask<ActionResult> DeleteInventoryItemAsync([FromRoute] Guid id, CancellationToken cancellationToken)
         {
