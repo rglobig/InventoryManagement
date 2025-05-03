@@ -1,6 +1,5 @@
 ﻿using FluentAssertions;
 using InventoryManagement.Application.DataTransferObjects;
-using InventoryManagement.Application.Repositories;
 using InventoryManagement.Application.Services;
 using InventoryManagement.Domain;
 using Moq;
