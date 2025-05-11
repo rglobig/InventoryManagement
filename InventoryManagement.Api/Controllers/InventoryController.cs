@@ -28,7 +28,7 @@ public class InventoryController(IInventoryService inventoryService) : Controlle
         CancellationToken cancellationToken)
     {
         var result = await inventoryService.GetInventoryItem(id, cancellationToken);
-        return result.IsSuccess ? Ok(result) : NotFound();
+        return result.IsSuccess ? Ok(result.Value) : NotFound();
     }
 
     [HttpPost]
@@ -57,7 +57,7 @@ public class InventoryController(IInventoryService inventoryService) : Controlle
         [FromBody] UpdateInventoryItemDto data, CancellationToken cancellationToken)
     {
         var result = await inventoryService.UpdateInventoryItem(id, data, cancellationToken);
-        return result.IsSuccess ? Ok(result) : BadRequest(result.Error);
+        return result.IsSuccess ? Ok(result.Value) : BadRequest(result.Error);
     }
 
     [HttpDelete("{id:guid}")]

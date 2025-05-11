@@ -1,0 +1,44 @@
+using InventoryManagement.Infrastructure;
+using Microsoft.AspNetCore.Mvc.Testing;
+using Microsoft.Extensions.DependencyInjection.Extensions;
+using Testcontainers.PostgreSql;
+
+namespace InventoryManagement.Api.IntegrationTests;
+
+public abstract class IntegrationTestBase(WebApplicationFactory<Program> factory)
+    : IClassFixture<WebApplicationFactory<Program>>, IAsyncLifetime
+{
+    protected WebApplicationFactory<Program> Factory = factory;
+    private PostgreSqlContainer _postgreSqlContainer = null!;
+
+    protected abstract Task SeedDatabase();
+
+    private class ConnectionResolverAdapter(string connection) : IConnectionStringResolver
+    {
+        public string GetConnectionString() => connection;
+    }
+
+    public async Task InitializeAsync()
+    {
+        _postgreSqlContainer = new PostgreSqlBuilder().Build();
+        await _postgreSqlContainer.StartAsync();
+
+        var connectionString = _postgreSqlContainer.GetConnectionString();
+        ConnectionResolverAdapter adapter = new(connectionString);
+
+        Factory = Factory.WithWebHostBuilder(builder =>
+        {
+            builder.ConfigureServices(services =>
+            {
+                services.Replace(ServiceDescriptor.Singleton<IConnectionStringResolver>(adapter));
+            });
+        });
+
+        await SeedDatabase();
+    }
+
+    public async Task DisposeAsync()
+    {
+        await _postgreSqlContainer.DisposeAsync();
+    }
+}

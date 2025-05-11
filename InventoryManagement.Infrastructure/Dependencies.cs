@@ -10,17 +10,12 @@ public static class Dependencies
     public static void AddInfrastructureDependencies(this IServiceCollection services, IConfiguration configuration)
     {
         services.AddScoped<IInventoryRepository, InventoryRepository>();
-        services.AddDbContext<InventoryDbContext>(UseNpgsql(configuration));
+        services.AddDbContext<InventoryDbContext>(UseNpgsql);
     }
-        
-    private static Action<DbContextOptionsBuilder> UseNpgsql(IConfiguration configuration)
+
+    private static void UseNpgsql(IServiceProvider provider, DbContextOptionsBuilder options)
     {
-        var host = configuration["DB_HOST"];
-        var port = configuration["DB_PORT"];
-        var username = configuration["DB_USERNAME"];
-        var password = configuration["DB_PASSWORD"];
-        var name = configuration["DB_NAME"];
-        var defaultConnection = $"Host={host};Port={port};UserName={username};Password={password};Database={name}";
-        return options => options.UseNpgsql(defaultConnection);
+        var resolver = provider.GetRequiredService<IConnectionStringResolver>();
+        options.UseNpgsql(resolver.GetConnectionString());
     }
 }

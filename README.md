@@ -9,37 +9,13 @@ This project demonstrates **CRUD operations** using a persistent database and a 
 - **EF Core 9**: Entity Framework Core for ORM functionality.
 - **C# 13**: Programming language used for development.
 - **.NET 9**: The runtime powering the application.
+- **FluentValidation**: Library for building strongly-typed validation rules.
+
 - **xUnit**: Unit testing framework.
 - **Moq**: Mocking framework for test isolation.
 - **FluentAssertions**: Library for expressive test assertions.
-```mermaid
-flowchart TD
-    A[ASP.NET Core] --> B[PostgreSQL]
-    A --> C[EF Core 9]
-    A --> D[C# 13]
-    A --> E[.NET 9]
-    A --> F[xUnit]
-    A --> G[Moq]
-    A --> H[FluentAssertions]
-
-    subgraph Api Layer
-        A
-    end
-
-    subgraph Data Layer
-        B
-        C
-    end
-
-    subgraph Test Layer
-        F
-        G
-        H
-    end
-
-    A --> I[Swagger API Integration]
-    I --> B
-```
+- **TestContainers**: Library for running test dependencies (e.g., databases) in Docker containers.
+- **Bogus**: Fake data generator for testing.
 
 ## 🗂️ Project Structure
 The project adopts a **layered architecture** for better organization, testability, and scalability:
