@@ -1,5 +1,6 @@
 using InventoryManagement.Infrastructure;
 using Microsoft.AspNetCore.Mvc.Testing;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Testcontainers.PostgreSql;
 
@@ -11,7 +12,7 @@ public abstract class IntegrationTestBase(WebApplicationFactory<Program> factory
     protected WebApplicationFactory<Program> Factory = factory;
     private PostgreSqlContainer _postgreSqlContainer = null!;
 
-    protected abstract Task SeedDatabase();
+    protected abstract Task SeedDatabase(IServiceProvider serviceProvider);
 
     private class ConnectionResolverAdapter(string connection) : IConnectionStringResolver
     {
@@ -34,7 +35,11 @@ public abstract class IntegrationTestBase(WebApplicationFactory<Program> factory
             });
         });
 
-        await SeedDatabase();
+        using var scope = Factory.Services.CreateScope();
+        var dbContext = scope.ServiceProvider.GetRequiredService<InventoryDbContext>();
+        await dbContext.Database.MigrateAsync();
+        
+        await SeedDatabase(scope.ServiceProvider);
     }
 
     public async Task DisposeAsync()

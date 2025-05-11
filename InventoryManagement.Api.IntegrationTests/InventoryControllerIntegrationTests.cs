@@ -3,8 +3,6 @@ using InventoryManagement.Application.DataTransferObjects;
 using Microsoft.AspNetCore.Mvc.Testing;
 using System.Net;
 using InventoryManagement.Domain;
-using InventoryManagement.Infrastructure;
-using Microsoft.EntityFrameworkCore;
 
 namespace InventoryManagement.Api.IntegrationTests;
 
@@ -13,15 +11,12 @@ public class InventoryControllerIntegrationTests(WebApplicationFactory<Program> 
     private List<InventoryItem> _inventoryItems = null!;
     private InventoryItem GetRandomItem => _inventoryItems[Random.Shared.Next(_inventoryItems.Count)];
 
-    protected override async Task SeedDatabase()
+    protected override async Task SeedDatabase(IServiceProvider serviceProvider)
     {
-        using var scope = Factory.Services.CreateScope();
-        var dbContext = scope.ServiceProvider.GetRequiredService<InventoryDbContext>();
-        await dbContext.Database.MigrateAsync();
         InventoryItemFaker inventoryItemFaker = new();
         _inventoryItems = inventoryItemFaker.Generate(50);
 
-        var inventoryRepository = scope.ServiceProvider.GetRequiredService<IInventoryRepository>();
+        var inventoryRepository = serviceProvider.GetRequiredService<IInventoryRepository>();
         foreach (var item in _inventoryItems)
         {
             await inventoryRepository.CreateInventoryItem(item, CancellationToken.None);
