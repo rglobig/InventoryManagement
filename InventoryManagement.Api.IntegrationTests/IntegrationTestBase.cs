@@ -1,6 +1,5 @@
 using InventoryManagement.Infrastructure;
 using Microsoft.AspNetCore.Mvc.Testing;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Testcontainers.PostgreSql;
 
@@ -36,8 +35,8 @@ public abstract class IntegrationTestBase(WebApplicationFactory<Program> factory
         });
 
         using var scope = Factory.Services.CreateScope();
-        var dbContext = scope.ServiceProvider.GetRequiredService<InventoryDbContext>();
-        await dbContext.Database.MigrateAsync();
+        var migration = scope.ServiceProvider.GetRequiredService<IMigrationService>();
+        await migration.MigrateAsync();
         
         await SeedDatabase(scope.ServiceProvider);
     }
