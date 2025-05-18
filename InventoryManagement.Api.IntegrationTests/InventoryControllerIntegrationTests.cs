@@ -26,10 +26,9 @@ public class InventoryControllerIntegrationTests(WebApplicationFactory<Program> 
     [Fact]
     public async Task CreateInventoryItem()
     {
-        var client = Factory.CreateClient();
         var input = new CreateInventoryItemDto("iPhone", "Smartphone", 1, 1000);
 
-        var response = await client.PostAsJsonAsync(@"api/v1.0/Inventory", input);
+        var response = await Client.PostAsJsonAsync(@"api/v1.0/Inventory", input);
 
         response.StatusCode.Should().Be(HttpStatusCode.Created);
         var data = await response.Content.ReadFromJsonAsync<InventoryItemDto>();
@@ -40,9 +39,7 @@ public class InventoryControllerIntegrationTests(WebApplicationFactory<Program> 
     [Fact]
     public async Task GetAllInventoryItems_ReturnsCollection()
     {
-        var client = Factory.CreateClient();
-
-        var response = await client.GetAsync(@"api/v1.0/Inventory");
+        var response = await Client.GetAsync(@"api/v1.0/Inventory");
 
         response.StatusCode.Should().Be(HttpStatusCode.OK);
         var dtos = await response.Content.ReadFromJsonAsync<ICollection<InventoryItemDto>>();
@@ -52,9 +49,8 @@ public class InventoryControllerIntegrationTests(WebApplicationFactory<Program> 
     [Fact]
     public async Task GetInventoryItemWithWrongId_ReturnsNotFound()
     {
-        var client = Factory.CreateClient();
         const string id = "WrongId";
-        var response = await client.GetAsync($@"api/v1.0/Inventory/{id}");
+        var response = await Client.GetAsync($@"api/v1.0/Inventory/{id}");
 
         response.StatusCode.Should().Be(HttpStatusCode.NotFound);
     }
@@ -62,11 +58,9 @@ public class InventoryControllerIntegrationTests(WebApplicationFactory<Program> 
     [Fact]
     public async Task GetInventoryItemWithId_ReturnsOK()
     {
-        var client = Factory.CreateClient();
-
         var item = GetRandomItem;
 
-        var response = await client.GetAsync($@"api/v1.0/Inventory/{item.Id}");
+        var response = await Client.GetAsync($@"api/v1.0/Inventory/{item.Id}");
         var data = await response.Content.ReadFromJsonAsync<InventoryItemDto>();
 
         response.StatusCode.Should().Be(HttpStatusCode.OK);
@@ -76,12 +70,11 @@ public class InventoryControllerIntegrationTests(WebApplicationFactory<Program> 
     [Fact]
     public async Task UpdateInventoryItem_ReturnsOK()
     {
-        var client = Factory.CreateClient();
         var id = GetRandomItem.Id;
         UpdateInventoryItemDto input = new("Huawei", "Smartphone", 3, 500);
         InventoryItemDto result = new(id, "Huawei", "Smartphone", 3, 500);
         
-        var response = await client.PatchAsJsonAsync($"api/v1.0/Inventory/{id}", input);
+        var response = await Client.PatchAsJsonAsync($"api/v1.0/Inventory/{id}", input);
 
         response.StatusCode.Should().Be(HttpStatusCode.OK);
         var data = await response.Content.ReadFromJsonAsync<InventoryItemDto>();
@@ -93,12 +86,10 @@ public class InventoryControllerIntegrationTests(WebApplicationFactory<Program> 
         "Expected response.StatusCode to be HttpStatusCode.BadRequest {value: 400}, but found HttpStatusCode.NotFound {value: 404}?")]
     public async Task UpdateInventoryItem_ReturnsBadRequest()
     {
-        var client = Factory.CreateClient();
-
         var id = "WrongId";
         var input = new UpdateInventoryItemDto("Huawei", "Smartphone", 3, 500);
 
-        var response = await client.PatchAsJsonAsync($"api/v1.0/Inventory/{id}", input);
+        var response = await Client.PatchAsJsonAsync($"api/v1.0/Inventory/{id}", input);
 
         response.StatusCode.Should().Be(HttpStatusCode.BadRequest);
     }
@@ -106,10 +97,9 @@ public class InventoryControllerIntegrationTests(WebApplicationFactory<Program> 
     [Fact]
     public async Task DeleteInventoryItem_ReturnsNoContent()
     {
-        var client = Factory.CreateClient();
         var id = GetRandomItem.Id;
 
-        var response = await client.DeleteAsync($"api/v1.0/Inventory/{id}");
+        var response = await Client.DeleteAsync($"api/v1.0/Inventory/{id}");
 
         response.StatusCode.Should().Be(HttpStatusCode.NoContent);
     }
@@ -118,11 +108,9 @@ public class InventoryControllerIntegrationTests(WebApplicationFactory<Program> 
         "Expected response.StatusCode to be HttpStatusCode.BadRequest {value: 400}, but found HttpStatusCode.NotFound {value: 404}?")]
     public async Task DeleteInventoryItem_ReturnsBadRequest()
     {
-        var client = Factory.CreateClient();
-
         var id = "WrongId";
 
-        var response = await client.DeleteAsync($"api/v1.0/Inventory/{id}");
+        var response = await Client.DeleteAsync($"api/v1.0/Inventory/{id}");
 
         response.StatusCode.Should().Be(HttpStatusCode.BadRequest);
     }

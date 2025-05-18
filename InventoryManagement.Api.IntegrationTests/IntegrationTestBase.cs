@@ -8,8 +8,8 @@ namespace InventoryManagement.Api.IntegrationTests;
 public abstract class IntegrationTestBase(WebApplicationFactory<Program> factory)
     : IClassFixture<WebApplicationFactory<Program>>, IAsyncLifetime
 {
-    protected WebApplicationFactory<Program> Factory = factory;
     private PostgreSqlContainer _postgreSqlContainer = null!;
+    protected HttpClient Client { get; private set; } = null!;
 
     protected abstract Task SeedDatabase(IServiceProvider serviceProvider);
 
@@ -17,7 +17,7 @@ public abstract class IntegrationTestBase(WebApplicationFactory<Program> factory
     {
         public string GetConnectionString() => connection;
     }
-
+    
     public async Task InitializeAsync()
     {
         _postgreSqlContainer = new PostgreSqlBuilder().Build();
@@ -26,7 +26,7 @@ public abstract class IntegrationTestBase(WebApplicationFactory<Program> factory
         var connectionString = _postgreSqlContainer.GetConnectionString();
         ConnectionResolverAdapter adapter = new(connectionString);
 
-        Factory = Factory.WithWebHostBuilder(builder =>
+        var factoryCopy = factory.WithWebHostBuilder(builder =>
         {
             builder.ConfigureServices(services =>
             {
@@ -34,11 +34,13 @@ public abstract class IntegrationTestBase(WebApplicationFactory<Program> factory
             });
         });
 
-        using var scope = Factory.Services.CreateScope();
+        using var scope = factoryCopy.Services.CreateScope();
         var migration = scope.ServiceProvider.GetRequiredService<IMigrationService>();
         await migration.MigrateAsync();
         
         await SeedDatabase(scope.ServiceProvider);
+        
+        Client = factoryCopy.CreateClient();
     }
 
     public async Task DisposeAsync()
