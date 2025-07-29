@@ -1,5 +1,6 @@
 ﻿using FluentAssertions;
 using InventoryManagement.Application.DataTransferObjects;
+using InventoryManagement.Application.DataTransferObjects.Validation;
 using InventoryManagement.Application.Services;
 using InventoryManagement.Domain;
 using Moq;
@@ -8,6 +9,9 @@ namespace InventoryManagement.Application.Tests;
 
 public class InventoryServiceTests
 {
+    private readonly CreateInventoryItemDtoValidator _createInventoryItemDtoValidator = new();
+    private readonly UpdateInventoryItemDtoValidator _updateInventoryItemDtoValidator = new();
+    
     [Fact]
     private async Task GetInventoryItems_WithOneItem()
     {
@@ -15,7 +19,7 @@ public class InventoryServiceTests
         var mock = new Mock<IInventoryRepository>();
         var token = CancellationToken.None;
         mock.Setup(r => r.GetInventoryItems(token)).ReturnsAsync(inventory);
-        var service = new InventoryService(mock.Object);
+        var service = new InventoryService(mock.Object, _createInventoryItemDtoValidator, _updateInventoryItemDtoValidator);
 
         var result = await service.GetInventoryItems(token);
 
@@ -32,7 +36,7 @@ public class InventoryServiceTests
         var mock = new Mock<IInventoryRepository>();
         var token = CancellationToken.None;
         mock.Setup(r => r.GetInventoryItem(id, token)).ReturnsAsync(item);
-        var service = new InventoryService(mock.Object);
+        var service = new InventoryService(mock.Object, _createInventoryItemDtoValidator, _updateInventoryItemDtoValidator);
 
         var result = await service.GetInventoryItem(id, token);
 
@@ -50,7 +54,7 @@ public class InventoryServiceTests
         var mock = new Mock<IInventoryRepository>();
         var token = CancellationToken.None;
         mock.Setup(r => r.CreateInventoryItem(It.IsAny<InventoryItem>(), token)).ReturnsAsync(item);
-        var service = new InventoryService(mock.Object);
+        var service = new InventoryService(mock.Object, _createInventoryItemDtoValidator, _updateInventoryItemDtoValidator);
 
         var result = await service.CreateInventoryItem(input, token);
         result.IsSuccess.Should().BeTrue();
@@ -68,7 +72,7 @@ public class InventoryServiceTests
         var mock = new Mock<IInventoryRepository>();
         var token = CancellationToken.None;
         mock.Setup(r => r.GetInventoryItem(id, token)).ReturnsAsync(item);
-        var service = new InventoryService(mock.Object);
+        var service = new InventoryService(mock.Object, _createInventoryItemDtoValidator, _updateInventoryItemDtoValidator);
 
         var result = await service.UpdateInventoryItem(id, input, token);
 
@@ -86,7 +90,7 @@ public class InventoryServiceTests
         var mock = new Mock<IInventoryRepository>();
         var token = CancellationToken.None;
         mock.Setup(r => r.GetInventoryItem(id, token)).ReturnsAsync(item);
-        var service = new InventoryService(mock.Object);
+        var service = new InventoryService(mock.Object, _createInventoryItemDtoValidator, _updateInventoryItemDtoValidator);
 
         var result = await service.UpdateInventoryItem(id, input, token);
 
@@ -102,7 +106,7 @@ public class InventoryServiceTests
         var mock = new Mock<IInventoryRepository>();
         var token = CancellationToken.None;
         mock.Setup(r => r.GetInventoryItem(id, token)).ReturnsAsync(item);
-        var service = new InventoryService(mock.Object);
+        var service = new InventoryService(mock.Object, _createInventoryItemDtoValidator, _updateInventoryItemDtoValidator);
 
         var result = await service.DeleteInventoryItem(id, token);
 
@@ -120,7 +124,7 @@ public class InventoryServiceTests
         var mock = new Mock<IInventoryRepository>();
         var token = CancellationToken.None;
         mock.Setup(r => r.GetInventoryItem(id, token)).ReturnsAsync(item);
-        var service = new InventoryService(mock.Object);
+        var service = new InventoryService(mock.Object, _createInventoryItemDtoValidator, _updateInventoryItemDtoValidator);
 
         var result = await service.DeleteInventoryItem(id, token);
 

@@ -1,35 +1,26 @@
 namespace InventoryManagement.Application;
 
-public class Result<T>
+public sealed record Result<T>(bool IsSuccess, T Value, string Error);
+
+public static class Result 
 {
-    private Result(bool isSuccess, T value, string error)
-    {
-        IsSuccess = isSuccess;
-        Value = value;
-        Error = error;
-    }
-
-    public bool IsSuccess { get; }
-    public T Value { get; }
-    public string Error { get; }
-
-    public static Result<T> Success(T value)
+    public static Result<T> Success<T>(T value)
     {
         return new Result<T>(true, value, string.Empty);
     }
 
-    public static Result<T> Failure(string error)
+    private static Result<T> Failure<T>(string error)
     {
         return new Result<T>(false, default!, error);
     }
-
-    public static Result<T> FailedToFindItem()
+    
+    public static Result<T> FailedToFindItem<T>()
     {
-        return Failure("Item not found.");
+        return Failure<T>("Item not found.");
     }
 
-    public static Result<T> FailedToValidate<T1>()
+    public static Result<T> FailedToValidate<T1, T>()
     {
-        return Failure($"{nameof(T1)} failed validation.");
+        return Failure<T>($"{nameof(T1)} failed validation.");
     }
 }

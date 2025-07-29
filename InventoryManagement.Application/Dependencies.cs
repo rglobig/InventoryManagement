@@ -1,3 +1,4 @@
+using InventoryManagement.Application.DataTransferObjects.Validation;
 using InventoryManagement.Application.Services;
 using InventoryManagement.Infrastructure;
 using Microsoft.Extensions.DependencyInjection;
@@ -10,5 +11,7 @@ public static class Dependencies
     {
         services.AddSingleton<IConnectionStringResolver, EnvironmentConnectionStringResolver>();
         services.AddScoped<IInventoryService, InventoryService>();
+        services.AddScoped<CreateInventoryItemDtoValidator>();
+        services.AddScoped<UpdateInventoryItemDtoValidator>();
     }
 }
