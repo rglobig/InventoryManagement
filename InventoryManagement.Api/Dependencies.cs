@@ -36,6 +36,7 @@ public static class Dependencies
 
     private static void AddVersionApiExplorer(ApiExplorerOptions options)
     {
+        // ReSharper disable once StringLiteralTypo
         options.GroupNameFormat = "'v'VVV";
         options.SubstituteApiVersionInUrl = true;
     }
