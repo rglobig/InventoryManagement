@@ -17,7 +17,7 @@
     </ItemGroup>
 
     <ItemGroup>
-        <AssemblyAttribute Include="System.Runtime.CompilerServices.InternalsVisibleTo(&quot;InventoryManagement.Application.Tests&quot;)"/>
+        <InternalsVisibleTo Include="InventoryManagement.Application.Tests" />
     </ItemGroup>
 
 </Project>
