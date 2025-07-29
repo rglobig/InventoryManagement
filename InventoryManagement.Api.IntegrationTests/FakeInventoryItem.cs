@@ -1,8 +1,10 @@
 using Bogus;
 using InventoryManagement.Domain;
+using JetBrains.Annotations;
 
 namespace InventoryManagement.Api.IntegrationTests;
 
+[UsedImplicitly]
 public sealed class InventoryItemFaker : Faker<InventoryItem>
 {
     public InventoryItemFaker()
