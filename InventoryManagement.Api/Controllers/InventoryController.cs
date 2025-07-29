@@ -11,7 +11,7 @@ namespace InventoryManagement.Api.Controllers;
 public sealed class InventoryController(IInventoryService inventoryService) : ControllerBase
 {
     private const string ApiVersion = "1.0";
-    
+
     [HttpGet]
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IReadOnlyList<InventoryItemDto>))]
     public async Task<ActionResult<IReadOnlyList<InventoryItemDto>>> GetAllInventoryItemsAsync(
