@@ -1,19 +1,38 @@
-﻿using System.Net;
-using FluentAssertions;
+﻿using FluentAssertions;
 using InventoryManagement.Application.DataTransferObjects;
 using InventoryManagement.Domain;
 using Microsoft.AspNetCore.Mvc.Testing;
 
 namespace InventoryManagement.Api.IntegrationTests;
 
-public class InventoryControllerIntegrationTests(WebApplicationFactory<Program> factory) : IntegrationTestBase(factory)
+public class InventoryControllerIntegrationTests(
+    WebApplicationFactory<Program> factory,
+    InventoryItemFaker inventoryItemFaker) : IntegrationTestBase(factory), IClassFixture<InventoryItemFaker>
 {
+    private const string BaseUrl = @"api/v1.0/Inventory";
+    private readonly InventoryItemDto _createdDto = new(Guid.Empty, "iPhone", "Smartphone", 1, 1000);
+    private readonly CreateInventoryItemDto _createDto = new("iPhone", "Smartphone", 1, 1000);
+    private readonly InventoryItemDto _updatedDto = new(Guid.Empty, "Huawei", "Smartphone", 3, 500);
+    private readonly UpdateInventoryItemDto _updateDto = new("Huawei", "Smartphone", 3, 500);
     private List<InventoryItem> _inventoryItems = null!;
-    private InventoryItem GetRandomItem => _inventoryItems[Random.Shared.Next(_inventoryItems.Count)];
+
+    private List<InventoryItemDto> GetInventoryItemsAsDtos()
+    {
+        return _inventoryItems.Select(InventoryItemDto.From).ToList();
+    }
+
+    private static string BaseUrlWithId(Guid id)
+    {
+        return $"{BaseUrl}/{id}";
+    }
+
+    private InventoryItem GetRandomItem()
+    {
+        return _inventoryItems[Random.Shared.Next(_inventoryItems.Count)];
+    }
 
     protected override async Task SeedDatabase(IServiceProvider serviceProvider)
     {
-        InventoryItemFaker inventoryItemFaker = new();
         _inventoryItems = inventoryItemFaker.Generate(50);
 
         var inventoryRepository = serviceProvider.GetRequiredService<IInventoryRepository>();
@@ -22,94 +41,80 @@ public class InventoryControllerIntegrationTests(WebApplicationFactory<Program> 
     }
 
     [Fact]
-    public async Task CreateInventoryItem()
+    public async Task Create_InventoryItem_Returns_Created()
     {
-        var input = new CreateInventoryItemDto("iPhone", "Smartphone", 1, 1000);
+        var response = await PostAsync(BaseUrl, _createDto);
 
-        var response = await Client.PostAsJsonAsync(@"api/v1.0/Inventory", input);
-
-        response.StatusCode.Should().Be(HttpStatusCode.Created);
-        var data = await response.Content.ReadFromJsonAsync<InventoryItemDto>();
-        data.Should().NotBeNull();
-        data.Should().BeEquivalentTo(input);
+        response.IsCreated();
+        var data = await response.GetContentAsync<InventoryItemDto>();
+        data.Should().BeEquivalentTo(_createdDto with { Id = data.Id });
     }
 
     [Fact]
-    public async Task GetAllInventoryItems_ReturnsCollection()
+    public async Task Get_All_InventoryItems_Returns_Correct_Collection()
     {
-        var response = await Client.GetAsync(@"api/v1.0/Inventory");
+        var response = await GetAsync(BaseUrl);
 
-        response.StatusCode.Should().Be(HttpStatusCode.OK);
-        var dtos = await response.Content.ReadFromJsonAsync<ICollection<InventoryItemDto>>();
-        _inventoryItems.Select(InventoryItemDto.From).ToList().Should().BeEquivalentTo(dtos);
+        response.IsOk();
+        var dtos = await response.GetContentAsync<ICollection<InventoryItemDto>>();
+        GetInventoryItemsAsDtos().Should().BeEquivalentTo(dtos);
     }
 
     [Fact]
-    public async Task GetInventoryItemWithWrongId_ReturnsNotFound()
+    public async Task Get_InventoryItem_With_Wrong_Id_Returns_NotFound()
     {
-        const string id = "WrongId";
-        var response = await Client.GetAsync($@"api/v1.0/Inventory/{id}");
+        var response = await GetAsync(BaseUrlWithId(Guid.Empty));
 
-        response.StatusCode.Should().Be(HttpStatusCode.NotFound);
+        response.IsNotFound();
     }
 
     [Fact]
-    public async Task GetInventoryItemWithId_ReturnsOK()
+    public async Task Get_InventoryItem_With_Correct_Id_Returns_OK()
     {
-        var item = GetRandomItem;
+        var item = GetRandomItem();
 
-        var response = await Client.GetAsync($@"api/v1.0/Inventory/{item.Id}");
-        var data = await response.Content.ReadFromJsonAsync<InventoryItemDto>();
+        var response = await GetAsync(BaseUrlWithId(item.Id));
 
-        response.StatusCode.Should().Be(HttpStatusCode.OK);
+        response.IsOk();
+        var data = await response.GetContentAsync<InventoryItemDto>();
         data.Should().BeEquivalentTo(InventoryItemDto.From(item));
     }
 
     [Fact]
-    public async Task UpdateInventoryItem_ReturnsOK()
+    public async Task Update_InventoryItem_Returns_OK()
     {
-        var id = GetRandomItem.Id;
-        UpdateInventoryItemDto input = new("Huawei", "Smartphone", 3, 500);
-        InventoryItemDto result = new(id, "Huawei", "Smartphone", 3, 500);
+        var id = GetRandomItem().Id;
 
-        var response = await Client.PatchAsJsonAsync($"api/v1.0/Inventory/{id}", input);
+        var response = await PatchAsync(BaseUrlWithId(id), _updateDto);
 
-        response.StatusCode.Should().Be(HttpStatusCode.OK);
-        var data = await response.Content.ReadFromJsonAsync<InventoryItemDto>();
-        data.Should().NotBeNull();
-        data.Should().BeEquivalentTo(result);
-    }
-
-    [Fact(Skip =
-        "Expected response.StatusCode to be HttpStatusCode.BadRequest {value: 400}, but found HttpStatusCode.NotFound {value: 404}?")]
-    public async Task UpdateInventoryItem_ReturnsBadRequest()
-    {
-        var id = "WrongId";
-        var input = new UpdateInventoryItemDto("Huawei", "Smartphone", 3, 500);
-
-        var response = await Client.PatchAsJsonAsync($"api/v1.0/Inventory/{id}", input);
-
-        response.StatusCode.Should().Be(HttpStatusCode.BadRequest);
+        response.IsOk();
+        var data = await response.GetContentAsync<InventoryItemDto>();
+        data.Should().BeEquivalentTo(_updatedDto with { Id = id });
     }
 
     [Fact]
-    public async Task DeleteInventoryItem_ReturnsNoContent()
+    public async Task Update_InventoryItem_With_Wrong_Id_Returns_BadRequest()
     {
-        var id = GetRandomItem.Id;
+        var response = await PatchAsync(BaseUrlWithId(Guid.Empty), _updateDto);
 
-        var response = await Client.DeleteAsync($"api/v1.0/Inventory/{id}");
-
-        response.StatusCode.Should().Be(HttpStatusCode.NoContent);
+        response.IsBadRequest();
     }
 
-    [Fact(Skip =
-        "Expected response.StatusCode to be HttpStatusCode.BadRequest {value: 400}, but found HttpStatusCode.NotFound {value: 404}?")]
-    public async Task DeleteInventoryItem_ReturnsBadRequest()
+    [Fact]
+    public async Task Delete_InventoryItem_Returns_NoContent()
     {
-        var id = "WrongId";
+        var id = GetRandomItem().Id;
 
-        var response = await Client.DeleteAsync($"api/v1.0/Inventory/{id}");
+        var response = await DeleteAsync(BaseUrlWithId(id));
 
-        response.StatusCode.Should().Be(HttpStatusCode.BadRequest);
+        response.IsNoContent();
+    }
+
+    [Fact]
+    public async Task Delete_InventoryItem_With_Wrong_Id_Returns_BadRequest()
+    {
+        var response = await DeleteAsync(BaseUrlWithId(Guid.Empty));
+
+        response.IsBadRequest();
     }
 }

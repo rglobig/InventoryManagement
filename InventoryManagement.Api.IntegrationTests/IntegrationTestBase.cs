@@ -8,8 +8,8 @@ namespace InventoryManagement.Api.IntegrationTests;
 public abstract class IntegrationTestBase(WebApplicationFactory<Program> factory)
     : IClassFixture<WebApplicationFactory<Program>>, IAsyncLifetime
 {
+    private HttpClient _client = null!;
     private PostgreSqlContainer _postgreSqlContainer = null!;
-    protected HttpClient Client { get; private set; } = null!;
 
     public async Task InitializeAsync()
     {
@@ -33,12 +33,32 @@ public abstract class IntegrationTestBase(WebApplicationFactory<Program> factory
 
         await SeedDatabase(scope.ServiceProvider);
 
-        Client = factoryCopy.CreateClient();
+        _client = factoryCopy.CreateClient();
     }
 
     public async Task DisposeAsync()
     {
         await _postgreSqlContainer.DisposeAsync();
+    }
+
+    protected async Task<HttpResponseMessage> GetAsync(string url)
+    {
+        return await _client.GetAsync(url);
+    }
+
+    protected async Task<HttpResponseMessage> PostAsync<T>(string url, T data)
+    {
+        return await _client.PostAsJsonAsync(url, data);
+    }
+
+    protected async Task<HttpResponseMessage> PatchAsync<T>(string url, T data)
+    {
+        return await _client.PatchAsJsonAsync(url, data);
+    }
+
+    protected async Task<HttpResponseMessage> DeleteAsync(string url)
+    {
+        return await _client.DeleteAsync(url);
     }
 
     protected abstract Task SeedDatabase(IServiceProvider serviceProvider);
