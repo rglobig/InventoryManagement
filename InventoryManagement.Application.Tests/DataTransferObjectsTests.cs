@@ -6,7 +6,7 @@ namespace InventoryManagement.Application.Tests;
 public class DataTransferObjectsTests
 {
     [Fact]
-    void CreateInventoryItemDto_ToInventoryItem()
+    private void CreateInventoryItemDto_ToInventoryItem()
     {
         var input = new CreateInventoryItemDto("iPhone", "Smartphone", 1, 1000);
 
@@ -20,7 +20,7 @@ public class DataTransferObjectsTests
     }
 
     [Fact]
-    void InventoryItemDto_FromInventoryItem()
+    private void InventoryItemDto_FromInventoryItem()
     {
         var input = new InventoryItem("iPhone", "Smartphone", 1, 1000);
 

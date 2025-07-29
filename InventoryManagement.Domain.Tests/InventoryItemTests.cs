@@ -3,7 +3,7 @@
 public class InventoryItemTests
 {
     [Fact]
-    void InventoryItem_Update()
+    private void InventoryItem_Update()
     {
         var item = new InventoryItem("iPhone", "Smartphone", 1, 1000);
         var newName = "Pixel";

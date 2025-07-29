@@ -1,8 +1,8 @@
-﻿using FluentAssertions;
+﻿using System.Net;
+using FluentAssertions;
 using InventoryManagement.Application.DataTransferObjects;
-using Microsoft.AspNetCore.Mvc.Testing;
-using System.Net;
 using InventoryManagement.Domain;
+using Microsoft.AspNetCore.Mvc.Testing;
 
 namespace InventoryManagement.Api.IntegrationTests;
 
@@ -18,9 +18,7 @@ public class InventoryControllerIntegrationTests(WebApplicationFactory<Program> 
 
         var inventoryRepository = serviceProvider.GetRequiredService<IInventoryRepository>();
         foreach (var item in _inventoryItems)
-        {
             await inventoryRepository.CreateInventoryItem(item, CancellationToken.None);
-        }
     }
 
     [Fact]
@@ -73,7 +71,7 @@ public class InventoryControllerIntegrationTests(WebApplicationFactory<Program> 
         var id = GetRandomItem.Id;
         UpdateInventoryItemDto input = new("Huawei", "Smartphone", 3, 500);
         InventoryItemDto result = new(id, "Huawei", "Smartphone", 3, 500);
-        
+
         var response = await Client.PatchAsJsonAsync($"api/v1.0/Inventory/{id}", input);
 
         response.StatusCode.Should().Be(HttpStatusCode.OK);

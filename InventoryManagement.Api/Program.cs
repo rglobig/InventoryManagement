@@ -14,4 +14,6 @@ app.AddMiddleware();
 app.Run();
 
 // ReSharper disable once ClassNeverInstantiated.Global
-public partial class Program { }
+public partial class Program
+{
+}

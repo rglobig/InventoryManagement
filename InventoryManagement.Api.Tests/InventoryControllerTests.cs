@@ -1,12 +1,4 @@
-﻿using FluentAssertions;
-using InventoryManagement.Api.Controllers;
-using InventoryManagement.Application.DataTransferObjects;
-using InventoryManagement.Application.Services;
-using InventoryManagement.Domain;
-using Microsoft.AspNetCore.Mvc;
-using Moq;
-
-namespace InventoryManagement.Api.Tests;
+﻿namespace InventoryManagement.Api.Tests;
 
 public class InventoryControllerTests
 {

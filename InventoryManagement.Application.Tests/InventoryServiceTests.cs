@@ -9,7 +9,7 @@ namespace InventoryManagement.Application.Tests;
 public class InventoryServiceTests
 {
     [Fact]
-    async Task GetInventoryItems_WithOneItem()
+    private async Task GetInventoryItems_WithOneItem()
     {
         List<InventoryItem> inventory = [new("iPhone", "Smartphone", 1, 1000)];
         var mock = new Mock<IInventoryRepository>();
@@ -18,14 +18,14 @@ public class InventoryServiceTests
         var service = new InventoryService(mock.Object);
 
         var result = await service.GetInventoryItems(token);
-        
+
         result.IsSuccess.Should().BeTrue();
         result.Value.Should().BeEquivalentTo(inventory.Select(InventoryItemDto.From).ToList());
         mock.Verify(r => r.GetInventoryItems(token), Times.Once);
     }
 
     [Fact]
-    async Task GetInventoryItem()
+    private async Task GetInventoryItem()
     {
         var item = new InventoryItem("iPhone", "Smartphone", 1, 1000);
         var id = item.Id;
@@ -42,7 +42,7 @@ public class InventoryServiceTests
     }
 
     [Fact]
-    async Task CreateInventoryItem()
+    private async Task CreateInventoryItem()
     {
         var input = new CreateInventoryItemDto("iPhone", "Smartphone", 1, 1000);
         var item = input.ToInventoryItem();
@@ -59,7 +59,7 @@ public class InventoryServiceTests
     }
 
     [Fact]
-    async Task TryUpdateInventoryItem_FoundItem()
+    private async Task TryUpdateInventoryItem_FoundItem()
     {
         var input = new UpdateInventoryItemDto("iPhone", "Smartphone", 1, 1000);
         var item = new InventoryItem("iPhone", "Smartphone", 1, 1000);
@@ -77,7 +77,7 @@ public class InventoryServiceTests
     }
 
     [Fact]
-    async Task TryUpdateInventoryItem_FoundNoItem()
+    private async Task TryUpdateInventoryItem_FoundNoItem()
     {
         var input = new UpdateInventoryItemDto("iPhone", "Smartphone", 1, 1000);
         InventoryItem item = null!;
@@ -94,7 +94,7 @@ public class InventoryServiceTests
     }
 
     [Fact]
-    async Task TryDeleteInventoryItem_FoundItem()
+    private async Task TryDeleteInventoryItem_FoundItem()
     {
         var item = new InventoryItem("iPhone", "Smartphone", 1, 1000);
         var id = item.Id;
@@ -112,7 +112,7 @@ public class InventoryServiceTests
     }
 
     [Fact]
-    async Task TryDeleteInventoryItem_FoundNoItem()
+    private async Task TryDeleteInventoryItem_FoundNoItem()
     {
         InventoryItem item = null!;
         var id = Guid.NewGuid();
@@ -127,5 +127,4 @@ public class InventoryServiceTests
         mock.Verify(r => r.DeleteInventoryItem(item, token), Times.Never);
         result.IsSuccess.Should().BeFalse();
     }
-
 }

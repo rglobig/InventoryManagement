@@ -3,7 +3,7 @@ using InventoryManagement.Domain;
 
 namespace InventoryManagement.Api.IntegrationTests;
 
-public class InventoryItemFaker : Faker<InventoryItem>
+public sealed class InventoryItemFaker : Faker<InventoryItem>
 {
     public InventoryItemFaker()
     {

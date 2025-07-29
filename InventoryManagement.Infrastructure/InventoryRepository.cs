@@ -20,7 +20,7 @@ public class InventoryRepository(InventoryDbContext dbContext) : IInventoryRepos
 
     public async Task<InventoryItem?> GetInventoryItem(Guid id, CancellationToken cancellationToken)
     {
-        return await dbContext.InventoryItems.FindAsync([id], cancellationToken: cancellationToken);
+        return await dbContext.InventoryItems.FindAsync([id], cancellationToken);
     }
 
     public async Task<IReadOnlyList<InventoryItem>> GetInventoryItems(CancellationToken cancellationToken)

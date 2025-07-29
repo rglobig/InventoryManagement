@@ -4,5 +4,8 @@ namespace InventoryManagement.Application.DataTransferObjects;
 
 public record CreateInventoryItemDto(string Name, string? Description, int Quantity, decimal Price)
 {
-    public InventoryItem ToInventoryItem() => new(Name, Description, Quantity, Price);
+    public InventoryItem ToInventoryItem()
+    {
+        return new InventoryItem(Name, Description, Quantity, Price);
+    }
 }
