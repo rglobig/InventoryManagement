@@ -2,7 +2,7 @@ namespace InventoryManagement.Application;
 
 public sealed record Result<T>(bool IsSuccess, T Value, string Error);
 
-public static class Result 
+public static class Result
 {
     public static Result<T> Success<T>(T value)
     {
@@ -13,7 +13,7 @@ public static class Result
     {
         return new Result<T>(false, default!, error);
     }
-    
+
     public static Result<T> FailedToFindItem<T>()
     {
         return Failure<T>("Item not found.");

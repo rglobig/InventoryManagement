@@ -5,13 +5,14 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace InventoryManagement.Api.Controllers;
 
-[ApiVersion("1.0")]
+[ApiVersion(ApiVersion)]
 [Route("api/v{version:apiVersion}/[controller]")]
 [ApiController]
 public sealed class InventoryController(IInventoryService inventoryService) : ControllerBase
 {
+    private const string ApiVersion = "1.0";
+    
     [HttpGet]
-    [MapToApiVersion("1.0")]
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IReadOnlyList<InventoryItemDto>))]
     public async Task<ActionResult<IReadOnlyList<InventoryItemDto>>> GetAllInventoryItemsAsync(
         CancellationToken cancellationToken)
@@ -21,7 +22,6 @@ public sealed class InventoryController(IInventoryService inventoryService) : Co
     }
 
     [HttpGet("{id:guid}")]
-    [MapToApiVersion("1.0")]
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(InventoryItemDto))]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<ActionResult<InventoryItemDto?>> GetInventoryItemWithIdAsync([FromRoute] Guid id,
@@ -32,25 +32,22 @@ public sealed class InventoryController(IInventoryService inventoryService) : Co
     }
 
     [HttpPost]
-    [MapToApiVersion("1.0")]
     [ProducesResponseType(StatusCodes.Status201Created, Type = typeof(InventoryItemDto))]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<ActionResult<InventoryItemDto>> CreateInventoryItemAsync(
         [FromBody] CreateInventoryItemDto data, CancellationToken cancellationToken)
     {
-        var result = await inventoryService.CreateInventoryItem(data, cancellationToken);
+        var (isSuccess, item, error) = await inventoryService.CreateInventoryItem(data, cancellationToken);
 
-        if (!result.IsSuccess) return BadRequest(result.Error);
+        if (!isSuccess) return BadRequest(error);
 
-        var item = result.Value;
         var locationUri = Url.Action(string.Empty, "Inventory",
-            new { id = item.Id, version = "1.0" });
+            new { id = item.Id, version = ApiVersion });
 
         return Created(locationUri, item);
     }
 
     [HttpPatch("{id:guid}")]
-    [MapToApiVersion("1.0")]
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(InventoryItemDto))]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<ActionResult<InventoryItemDto?>> UpdateInventoryItemAsync([FromRoute] Guid id,
@@ -61,7 +58,6 @@ public sealed class InventoryController(IInventoryService inventoryService) : Co
     }
 
     [HttpDelete("{id:guid}")]
-    [MapToApiVersion("1.0")]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async ValueTask<ActionResult> DeleteInventoryItemAsync([FromRoute] Guid id,
