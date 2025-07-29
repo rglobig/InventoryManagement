@@ -4,7 +4,7 @@ using InventoryManagement.Domain;
 
 namespace InventoryManagement.Application.Services;
 
-public class InventoryService(IInventoryRepository inventoryRepository) : IInventoryService
+internal sealed class InventoryService(IInventoryRepository inventoryRepository) : IInventoryService
 {
     public async Task<Result<IReadOnlyList<InventoryItemDto>>> GetInventoryItems(CancellationToken cancellationToken)
     {

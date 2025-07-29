@@ -2,7 +2,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace InventoryManagement.Infrastructure;
 
-public class MigrationService(InventoryDbContext dbContext) : IMigrationService
+internal sealed class MigrationService(InventoryDbContext dbContext) : IMigrationService
 {
     public async Task MigrateAsync()
     {

@@ -2,7 +2,7 @@
 
 namespace InventoryManagement.Application.DataTransferObjects;
 
-public record CreateInventoryItemDto(string Name, string? Description, int Quantity, decimal Price)
+public sealed record CreateInventoryItemDto(string Name, string? Description, int Quantity, decimal Price)
 {
     public InventoryItem ToInventoryItem()
     {

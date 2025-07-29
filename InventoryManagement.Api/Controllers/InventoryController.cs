@@ -8,7 +8,7 @@ namespace InventoryManagement.Api.Controllers;
 [ApiVersion("1.0")]
 [Route("api/v{version:apiVersion}/[controller]")]
 [ApiController]
-public class InventoryController(IInventoryService inventoryService) : ControllerBase
+public sealed class InventoryController(IInventoryService inventoryService) : ControllerBase
 {
     [HttpGet]
     [MapToApiVersion("1.0")]

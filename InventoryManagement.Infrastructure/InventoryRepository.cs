@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace InventoryManagement.Infrastructure;
 
-public class InventoryRepository(InventoryDbContext dbContext) : IInventoryRepository
+internal sealed class InventoryRepository(InventoryDbContext dbContext) : IInventoryRepository
 {
     public async Task<InventoryItem> CreateInventoryItem(InventoryItem item, CancellationToken cancellationToken)
     {

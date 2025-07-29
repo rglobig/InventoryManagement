@@ -3,7 +3,7 @@ using Microsoft.Extensions.Configuration;
 
 namespace InventoryManagement.Application;
 
-public sealed class EnvironmentConnectionStringResolver(IConfiguration configuration) : IConnectionStringResolver
+internal sealed class EnvironmentConnectionStringResolver(IConfiguration configuration) : IConnectionStringResolver
 {
     public string GetConnectionString()
     {

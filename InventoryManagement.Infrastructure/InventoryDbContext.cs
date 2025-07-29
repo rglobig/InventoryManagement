@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace InventoryManagement.Infrastructure;
 
-public class InventoryDbContext(DbContextOptions<InventoryDbContext> options) : DbContext(options)
+internal sealed class InventoryDbContext(DbContextOptions<InventoryDbContext> options) : DbContext(options)
 {
     public DbSet<InventoryItem> InventoryItems { get; init; }
 

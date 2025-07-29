@@ -2,7 +2,7 @@ using FluentValidation;
 
 namespace InventoryManagement.Application.DataTransferObjects.Validation;
 
-public class CreateInventoryItemDtoValidator : AbstractValidator<CreateInventoryItemDto>
+internal sealed class CreateInventoryItemDtoValidator : AbstractValidator<CreateInventoryItemDto>
 {
     public CreateInventoryItemDtoValidator()
     {

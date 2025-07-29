@@ -2,7 +2,7 @@
 
 namespace InventoryManagement.Application.DataTransferObjects;
 
-public record InventoryItemDto(Guid Id, string Name, string? Description, int Quantity, decimal Price)
+public sealed record InventoryItemDto(Guid Id, string Name, string? Description, int Quantity, decimal Price)
 {
     public static InventoryItemDto From(InventoryItem item)
     {

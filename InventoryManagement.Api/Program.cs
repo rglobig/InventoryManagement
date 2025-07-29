@@ -1,5 +1,6 @@
 using dotenv.net;
 using InventoryManagement.Api;
+using JetBrains.Annotations;
 
 DotEnv.Load();
 
@@ -13,7 +14,5 @@ app.AddMiddleware();
 
 app.Run();
 
-// ReSharper disable once ClassNeverInstantiated.Global
-public partial class Program
-{
-}
+[UsedImplicitly]
+public partial class Program;
