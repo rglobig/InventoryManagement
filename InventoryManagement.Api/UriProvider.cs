@@ -6,7 +6,6 @@ public class UriProvider : IUriProvider
 {
     public Uri GetRequestUriWithId(HttpRequest request, Guid id)
     {
-        ArgumentNullException.ThrowIfNull(request);
         if (id == Guid.Empty) throw new ArgumentException("Id cannot be empty.", nameof(id));
 
         return new Uri(Path.Combine(GetUrl(request), id.ToString()), UriKind.Absolute);

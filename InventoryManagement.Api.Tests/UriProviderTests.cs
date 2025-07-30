@@ -18,14 +18,6 @@ public class UriProviderTests : UriProvider
     }
 
     [Fact]
-    public void GetRequestUriWithId_ShouldThrow_ArgumentNullException_WhenRequestIsNull()
-    {
-        Action act = () => GetRequestUriWithId(null!, Guid.NewGuid());
-
-        act.Should().Throw<ArgumentNullException>();
-    }
-
-    [Fact]
     public void GetRequestUriWithId_ShouldThrow_ArgumentNullException_WhenIdIsEmpty()
     {
         var (request, _) = CreateRequest();
