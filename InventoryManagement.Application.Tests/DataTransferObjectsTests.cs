@@ -1,6 +1,6 @@
-﻿using InventoryManagement.Application.DataTransferObjects;
+﻿using FluentAssertions;
+using InventoryManagement.Application.DataTransferObjects;
 using InventoryManagement.Domain;
-using FluentAssertions;
 
 namespace InventoryManagement.Application.Tests;
 
@@ -37,7 +37,7 @@ public class DataTransferObjectsTests
             options.Excluding(x => x.CreatedAt)
                 .Excluding(x => x.UpdatedAt));
     }
-    
+
     [Fact]
     private void UpdateInventoryItemDto_From_InventoryItem()
     {
