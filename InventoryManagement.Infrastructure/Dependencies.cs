@@ -7,6 +7,7 @@ namespace InventoryManagement.Infrastructure;
 
 public static class Dependencies
 {
+    // ReSharper disable once UnusedParameter.Global
     public static void AddInfrastructureDependencies(this IServiceCollection services, IConfiguration configuration)
     {
         services.AddScoped<IMigrationService, MigrationService>();
