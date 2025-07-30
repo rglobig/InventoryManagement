@@ -8,7 +8,7 @@ namespace InventoryManagement.Api.Controllers;
 [ApiVersion(ApiVersion)]
 [Route("api/v{version:apiVersion}/[controller]")]
 [ApiController]
-public sealed class InventoryController(IInventoryService inventoryService) : ControllerBase
+public sealed class InventoryController(IInventoryService inventoryService, IUriProvider uriProvider) : ControllerBase
 {
     private const string ApiVersion = "1.0";
 
@@ -41,10 +41,7 @@ public sealed class InventoryController(IInventoryService inventoryService) : Co
 
         if (!isSuccess) return BadRequest(error);
 
-        var locationUri = Url.Action(string.Empty, "Inventory",
-            new { id = item.Id, version = ApiVersion });
-
-        return Created(locationUri, item);
+        return Created(uriProvider.GetRequestUriWithId(Request, item.Id), item);
     }
 
     [HttpPatch("{id:guid}")]
@@ -60,7 +57,7 @@ public sealed class InventoryController(IInventoryService inventoryService) : Co
     [HttpDelete("{id:guid}")]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    public async ValueTask<ActionResult> DeleteInventoryItemAsync([FromRoute] Guid id,
+    public async Task<ActionResult> DeleteInventoryItemAsync([FromRoute] Guid id,
         CancellationToken cancellationToken)
     {
         var result = await inventoryService.DeleteInventoryItem(id, cancellationToken);

@@ -8,4 +8,9 @@ public sealed record CreateInventoryItemDto(string Name, string? Description, in
     {
         return new InventoryItem(Name, Description, Quantity, Price);
     }
+
+    public static CreateInventoryItemDto From(InventoryItem item)
+    {
+        return new CreateInventoryItemDto(item.Name, item.Description, item.Quantity, item.Price);
+    }
 }

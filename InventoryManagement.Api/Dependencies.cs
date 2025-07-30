@@ -21,6 +21,7 @@ public static class Dependencies
         services.AddSwaggerGen();
         services.AddApiVersioning(AddVersioning)
             .AddApiExplorer(AddVersionApiExplorer);
+        services.AddSingleton<IUriProvider, UriProvider>();
     }
 
     private static void AddVersioning(ApiVersioningOptions option)
