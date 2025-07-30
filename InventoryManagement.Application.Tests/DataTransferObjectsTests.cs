@@ -1,36 +1,51 @@
 ﻿using InventoryManagement.Application.DataTransferObjects;
 using InventoryManagement.Domain;
+using FluentAssertions;
 
 namespace InventoryManagement.Application.Tests;
 
 public class DataTransferObjectsTests
 {
+    private readonly CreateInventoryItemDto _createDto = new("iPhone", "Smartphone", 1, 1000);
+    private readonly InventoryItem _item = new("iPhone", "Smartphone", 1, 1000);
+
     [Fact]
-    private void CreateInventoryItemDto_ToInventoryItem()
+    private void CreateInventoryItemDto_To_InventoryItem()
     {
-        var input = new CreateInventoryItemDto("iPhone", "Smartphone", 1, 1000);
+        var item = _createDto.ToInventoryItem();
 
-        var item = input.ToInventoryItem();
-
-        Assert.NotNull(item);
-        Assert.Equal(input.Name, item.Name);
-        Assert.Equal(input.Description, item.Description);
-        Assert.Equal(input.Quantity, item.Quantity);
-        Assert.Equal(input.Price, item.Price);
+        item.Should().BeEquivalentTo(_createDto);
     }
 
     [Fact]
-    private void InventoryItemDto_FromInventoryItem()
+    private void CreateInventoryItemDto_From_InventoryItem()
     {
-        var input = new InventoryItem("iPhone", "Smartphone", 1, 1000);
+        var dto = CreateInventoryItemDto.From(_item);
 
-        var item = InventoryItemDto.From(input);
+        dto.Should().BeEquivalentTo(_item, options =>
+            options.Excluding(x => x.Id)
+                .Excluding(x => x.CreatedAt)
+                .Excluding(x => x.UpdatedAt));
+    }
 
-        Assert.NotNull(item);
-        Assert.Equal(input.Id, item.Id);
-        Assert.Equal(input.Name, item.Name);
-        Assert.Equal(input.Description, item.Description);
-        Assert.Equal(input.Quantity, item.Quantity);
-        Assert.Equal(input.Price, item.Price);
+    [Fact]
+    private void InventoryItemDto_From_InventoryItem()
+    {
+        var dto = InventoryItemDto.From(_item);
+
+        dto.Should().BeEquivalentTo(_item, options =>
+            options.Excluding(x => x.CreatedAt)
+                .Excluding(x => x.UpdatedAt));
+    }
+    
+    [Fact]
+    private void UpdateInventoryItemDto_From_InventoryItem()
+    {
+        var dto = UpdateInventoryItemDto.From(_item);
+
+        dto.Should().BeEquivalentTo(_item, options =>
+            options.Excluding(x => x.Id)
+                .Excluding(x => x.CreatedAt)
+                .Excluding(x => x.UpdatedAt));
     }
 }
