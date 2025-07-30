@@ -1,3 +1,5 @@
+[![dotnetbuild](https://github.com/rglobig/InventoryManagement/actions/workflows/dotnet.yml/badge.svg)](https://github.com/rglobig/InventoryManagement/actions/workflows/dotnet.yml)
+
 # CRUD Example Project
 
 ## 🎯 Goal
